@@ -1,0 +1,84 @@
+@import './typography.css';
+@import './animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-orange: #FF5C00;
+    --color-espresso: #18110B;
+    --color-cream: #FAF6F0;
+    --color-turquoise: #00B4B4;
+  }
+
+  html {
+    scroll-behavior: auto !important; /* Lenis takes over smooth scrolling */
+  }
+
+  body {
+    background-color: #FAF6F0;
+    color: #18110B;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #FAF6F0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #FF5C00;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #E64B00;
+  }
+}
+
+@layer utilities {
+  .text-stroke-sm {
+    -webkit-text-stroke: 1px rgba(24, 17, 11, 0.2);
+  }
+  .text-stroke-orange {
+    -webkit-text-stroke: 1.5px #FF5C00;
+  }
+  .text-stroke-white {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4);
+  }
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .glass-dark {
+    background: rgba(24, 17, 11, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-orange {
+    background: rgba(255, 92, 0, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .clip-diagonal {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vw), 0 100%);
+  }
+}
+

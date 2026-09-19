@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 85" fill="none" class="onzgo-logo">
+  <!-- 3 Speed lines on left -->
+  <g fill="#F26B1D">
+    <rect x="2" y="24" width="14" height="4.5" rx="2.25"/>
+    <rect x="8" y="34" width="18" height="4.5" rx="2.25"/>
+    <rect x="0" y="44" width="16" height="4.5" rx="2.25"/>
+  </g>
+
+  <!-- Letter O with Coffee Bean inside -->
+  <g fill="#3A1E17">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M60 14C43.4315 14 30 27.4315 30 44C30 60.5685 43.4315 74 60 74C76.5685 74 90 60.5685 90 44C90 27.4315 76.5685 14 60 14ZM60 26C50.0589 26 42 34.0589 42 44C42 53.9411 50.0589 62 60 62C69.9411 62 78 53.9411 78 44C78 34.0589 69.9411 26 60 26Z"/>
+    <!-- Coffee bean center line & crease -->
+    <path d="M58 35C58 35 55 42 62 45C69 48 61 54 61 54" stroke="#F26B1D" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Letter N -->
+  <path d="M102 16H114V42L134 16H146V72H134V46L114 72H102V16Z" fill="#3A1E17"/>
+
+  <!-- Letter Z (Orange Brand Accent) -->
+  <path d="M158 16H198V27L172 61H199V72H156V61L182 27H158V16Z" fill="#F26B1D"/>
+
+  <!-- Letter G -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M232 14C215.431 14 202 27.4315 202 44C202 60.5685 215.431 74 232 74C248.569 74 262 60.5685 262 44V38H234V49H250C248.5 56 241 62 232 62C222.059 62 214 53.9411 214 44C214 34.0589 222.059 26 232 26C240.5 26 247.5 32 249.5 39.5H261.8C259.5 25 247 14 232 14Z" fill="#3A1E17"/>
+
+  <!-- Letter O -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M290 14C273.431 14 260 27.4315 260 44C260 60.5685 273.431 74 290 74C306.569 74 320 60.5685 320 44C320 27.4315 306.569 14 290 14ZM290 26C280.059 26 272 34.0589 272 44C272 53.9411 280.059 62 290 62C299.941 62 308 53.9411 308 44C308 34.0589 299.941 26 290 26Z" fill="#3A1E17"/>
+
+  <!-- Tagline: BREW • BITES • VIBES -->
+  <text x="160" y="84" text-anchor="middle" font-family="'Cairo', sans-serif" font-weight="900" font-size="7.5" fill="#3A1E17" letter-spacing="4">BREW <tspan fill="#F26B1D">•</tspan> BITES <tspan fill="#F26B1D">•</tspan> VIBES</text>
+</svg>
+
