@@ -1,0 +1,666 @@
+/* ═══════════════════════════════════════════════════════
+   ONZGO — style.css
+   Mobile-first · Bilingual RTL/LTR · CSS Logical Properties
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── CSS VARIABLES / TOKENS ──────────────────────── */
+:root {
+  --espresso: #3A1E17; /* sign background, primary dark */
+  --orange:   #F26B1D; /* the Z, brand accents, primary CTAs */
+  --cream:    #FFF6E9; /* letters, light sections */
+  --teal:     #2CBFA6; /* outdoor chairs, Bites block */
+  --blue:     #1F3BB3; /* beanbag, Vibes block */
+  --kraft:    #C9A579; /* cup sleeve, secondary accents */
+  --white:    #FFFFFF;
+
+  --font: 'Cairo', sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --nav-h: 64px;
+}
+
+/* ─── RESET & BASE ────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--cream);
+  color: var(--espresso);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Typography rules: no letter-spacing on Arabic, comfortable line-height */
+html[lang="ar"] {
+  letter-spacing: 0 !important;
+}
+html[lang="ar"] .t-hero,
+html[lang="ar"] .t-section {
+  line-height: 1.25;
+}
+
+/* ─── TYPOGRAPHY SCALE ────────────────────────────── */
+.t-hero    { font-size: clamp(2.2rem, 7.5vw, 4.5rem); font-weight: 900; line-height: 1.1; }
+.t-section { font-size: clamp(1.8rem, 6vw, 3.2rem);   font-weight: 800; line-height: 1.15; }
+.t-sub     { font-size: clamp(1rem, 3.5vw, 1.35rem);  font-weight: 600; line-height: 1.6; }
+.t-pill    { font-size: clamp(0.85rem, 2.5vw, 1rem);   font-weight: 700; letter-spacing: 0.04em; }
+html[lang="ar"] .t-pill { letter-spacing: 0; }
+
+/* ─── PILL BUTTONS (Rounded pill with directional arrow) ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.8em 1.85em;
+  border-radius: 999px;
+  text-align: center;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
+  cursor: pointer;
+}
+.pill:active {
+  transform: scale(0.96);
+}
+.pill .arrow {
+  display: inline-block;
+  transition: transform 0.25s var(--ease-out);
+}
+/* Arrow nudge on hover/focus */
+.pill:hover .arrow,
+.pill:focus-visible .arrow {
+  transform: translateX(4px);
+}
+html[dir="rtl"] .pill:hover .arrow,
+html[dir="rtl"] .pill:focus-visible .arrow {
+  transform: translateX(-4px);
+}
+
+.pill-orange {
+  background: var(--orange);
+  color: var(--white);
+}
+.pill-orange:hover {
+  box-shadow: 0 6px 24px rgba(242, 107, 29, 0.38);
+  transform: translateY(-2px);
+}
+
+.pill-cream {
+  background: var(--cream);
+  color: var(--espresso);
+}
+.pill-cream:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.pill-espresso {
+  background: var(--espresso);
+  color: var(--cream);
+}
+.pill-espresso:hover {
+  box-shadow: 0 6px 24px rgba(58, 30, 23, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ─── 1. HEADER ───────────────────────────────────── */
+#header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: var(--nav-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1.25rem;
+  transition: background 0.35s, backdrop-filter 0.35s;
+}
+#header.scrolled {
+  background: rgba(58, 30, 23, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+#header .logo {
+  display: flex;
+  align-items: center;
+}
+#header .logo img {
+  height: 38px;
+  width: auto;
+}
+
+/* AR | EN Language toggle button */
+#lang-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 0.35em 0.9em;
+  color: var(--cream);
+  font-family: var(--font);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: background 0.2s, border-color 0.2s;
+}
+#lang-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--cream);
+}
+
+/* Hamburger icon */
+#burger {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+#burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--cream);
+  border-radius: 4px;
+  transition: transform 0.3s, opacity 0.3s, width 0.3s;
+}
+#burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#burger.open span:nth-child(2) { opacity: 0; }
+#burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Full-screen espresso overlay */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--espresso);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  transform: translateX(100%);
+  transition: transform 0.45s var(--ease-out);
+}
+html[dir="rtl"] #overlay {
+  transform: translateX(-100%);
+}
+#overlay.open {
+  transform: translateX(0) !important;
+}
+
+#overlay .doodle-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+}
+
+#overlay nav a {
+  display: block;
+  text-align: center;
+  font-size: clamp(1.6rem, 6vw, 2.6rem);
+  font-weight: 800;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  padding: 0.35em 0;
+  transition: color 0.2s;
+}
+html[lang="ar"] #overlay nav a {
+  letter-spacing: 0;
+}
+#overlay nav a:hover {
+  color: var(--orange);
+}
+
+#overlay .overlay-tagline {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--kraft);
+  text-transform: uppercase;
+}
+
+/* ─── 2. HERO SECTION ─────────────────────────────── */
+#hero {
+  position: relative;
+  min-height: 100svh;
+  min-height: 100vh;
+  background: var(--espresso);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-block-end: 8vh;
+  padding-inline: 1.5rem;
+  overflow: hidden;
+}
+
+/* Espresso radial gradients */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, #6B3020 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(242, 107, 29, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Hand-drawn squiggle texture */
+#hero .squiggle-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+}
+
+/* Cup wrapper with subtle parallax */
+#hero .cup-wrap {
+  position: absolute;
+  inset-block-start: 12%;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  width: min(340px, 72vw);
+  z-index: 1;
+  will-change: transform;
+}
+html[dir="rtl"] #hero .cup-wrap {
+  transform: translateX(50%);
+}
+#hero .cup-wrap img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.65));
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* Hero text below product */
+#hero .hero-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--cream);
+  max-width: 540px;
+}
+#hero .hero-text h1 {
+  margin-block-end: 1.5rem;
+}
+
+/* Scroll cue indicator */
+#hero .scroll-cue {
+  position: absolute;
+  inset-block-end: 2.2rem;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.5;
+  animation: bounce 2s ease-in-out infinite;
+}
+html[dir="rtl"] #hero .scroll-cue {
+  transform: translateX(50%);
+  animation-name: bounce-rtl;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(6px); }
+}
+@keyframes bounce-rtl {
+  0%, 100% { transform: translateX(50%) translateY(0); }
+  50%      { transform: translateX(50%) translateY(6px); }
+}
+#hero .scroll-cue .bar {
+  width: 1.5px;
+  height: 28px;
+  background: var(--cream);
+  border-radius: 2px;
+}
+#hero .scroll-cue .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cream);
+}
+
+/* ─── 3. WAVY DIVIDERS ────────────────────────────── */
+.wave-strip {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  display: block;
+  margin-block-start: -1px;
+}
+.wave-strip svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* Flip asymmetrical wave paths in RTL */
+html[dir="rtl"] .wave-strip svg {
+  transform: scaleX(-1);
+}
+
+/* Thin wavy line-pattern strip on cream */
+.squiggle-strip {
+  background: var(--cream);
+  padding-block: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.squiggle-strip svg {
+  width: 120%;
+  min-width: 600px;
+  opacity: 0.3;
+}
+
+/* ─── SECTION COMMON RHYTHM (Solid color blocks) ──── */
+.section-inner {
+  max-width: 560px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  padding-block: 5rem;
+  text-align: center;
+}
+.section-inner h2 {
+  margin-block-end: 1rem;
+}
+.section-inner p {
+  margin-block-end: 2rem;
+}
+
+/* ─── 4. BREW BLOCK (Orange solid block) ──────────── */
+#brew {
+  background: var(--orange);
+  color: var(--cream);
+}
+
+/* ─── 5. BITES BLOCK (Teal solid block) ───────────── */
+#bites {
+  background: var(--teal);
+  color: var(--espresso);
+}
+
+/* ─── 6. VIBES BLOCK (Royal Blue block) ───────────── */
+#vibes {
+  background: var(--blue);
+  color: var(--cream);
+  position: relative;
+}
+
+/* Edge-to-edge photography with curved wavy overlap */
+#vibes .vibes-photo {
+  position: relative;
+  width: 100%;
+  margin-block-start: -2px;
+  overflow: hidden;
+}
+#vibes .vibes-photo::before {
+  content: '';
+  display: block;
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 60px;
+  background: var(--blue);
+  z-index: 1;
+  clip-path: ellipse(55% 100% at 50% 0%);
+}
+#vibes .vibes-photo img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── 7. VISIT US BLOCK (Cream solid block) ───────── */
+#visit {
+  background: var(--cream);
+  color: var(--espresso);
+}
+#visit .visit-squiggle {
+  display: flex;
+  justify-content: center;
+  margin-block-end: 2rem;
+  opacity: 0.25;
+}
+#visit .info-card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 32px rgba(58, 30, 23, 0.08);
+  margin-block-end: 2rem;
+  text-align: start;
+}
+#visit .info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-block-end: 1.25rem;
+}
+#visit .info-row:last-child {
+  margin-block-end: 0;
+}
+#visit .info-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+#visit .info-icon svg {
+  width: 18px;
+  height: 18px;
+}
+#visit .info-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-block-end: 0.2rem;
+}
+html[lang="ar"] #visit .info-label {
+  letter-spacing: 0;
+}
+#visit .info-value {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ─── 8. FOOTER (Espresso solid block) ────────────── */
+#footer {
+  background: var(--espresso);
+  color: var(--cream);
+  padding-block: 3.5rem 2.5rem;
+  padding-inline: 1.5rem;
+}
+#footer .foot-logo {
+  display: flex;
+  justify-content: center;
+  margin-block-end: 2rem;
+}
+#footer .foot-logo img {
+  height: 44px;
+  width: auto;
+}
+#footer .foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem 2rem;
+  margin-block-end: 2rem;
+}
+#footer .foot-links a {
+  font-size: 0.92rem;
+  font-weight: 600;
+  opacity: 0.75;
+  transition: opacity 0.2s, color 0.2s;
+}
+#footer .foot-links a:hover {
+  opacity: 1;
+  color: var(--orange);
+}
+#footer .social-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-block-end: 2rem;
+}
+#footer .social-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+#footer .social-btn:hover {
+  border-color: var(--orange);
+  background: var(--orange);
+}
+#footer .legal {
+  text-align: center;
+  font-size: 0.78rem;
+  opacity: 0.45;
+  line-height: 1.7;
+}
+
+/* ─── 9. FLOATING ROUND BUTTON ────────────────────── */
+#float-cta {
+  position: fixed;
+  inset-block-end: 1.5rem;
+  inset-inline-end: 1.25rem;
+  z-index: 90;
+}
+#float-cta .wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
+}
+#float-cta .wa-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+#float-cta .wa-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ─── SCROLL MOTION & SQUIGGLES ───────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 0.12s; }
+.reveal-d2 { transition-delay: 0.22s; }
+
+/* Hand-drawn squiggles stroke-draw animation */
+.squig-draw {
+  stroke-dasharray: var(--path-len, 800);
+  stroke-dashoffset: var(--path-len, 800);
+  transition: stroke-dashoffset 1.4s var(--ease-out);
+}
+.squig-draw.drawn {
+  stroke-dashoffset: 0;
+}
+
+/* ─── PREFERS REDUCED MOTION ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .squig-draw {
+    stroke-dashoffset: 0;
+  }
+  #hero .cup-wrap img {
+    animation: none;
+  }
+}
+
+/* ─── RESPONSIVE SCALING ──────────────────────────── */
+@media (min-width: 768px) {
+  .section-inner {
+    padding-block: 7rem;
+  }
+  #visit .info-card {
+    padding: 2.5rem;
+  }
+  #header .logo img {
+    height: 44px;
+  }
+  #footer .foot-logo img {
+    height: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-inner {
+    max-width: 680px;
+    padding-block: 8rem;
+  }
+  #hero .cup-wrap {
+    width: min(380px, 45vw);
+  }
+  #header {
+    padding-inline: 2.5rem;
+  }
+}
