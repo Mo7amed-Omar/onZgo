@@ -1,0 +1,705 @@
+/* ============================================================
+   ONZGO — Sections
+   Per-section styles: hero, brew, bites, vibes, visit, footer
+   ============================================================ */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   0. HEADER (section-level overrides)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* (header base styles in components.css) */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   1. HERO
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;   /* headline anchored to bottom */
+  overflow: hidden;
+  /* Espresso gradient shows while video loads and on reduced-motion */
+  background: radial-gradient(
+    ellipse at 44% 35%,
+    #5C2A18 0%,
+    #3A1E17 48%,
+    #1A0A06 100%
+  );
+}
+
+/* ── Video container ──────────────────────────────────────────── */
+.onz-hero-video-wrap {
+  /* Prevent layout shift: explicit container size */
+  position: absolute;
+  z-index: 0;
+}
+
+/* ── Mobile layout: video fills upper ~65% of the hero ────────── */
+@media (max-width: 767px) {
+  .onz-hero-video-wrap {
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 65svh;          /* video occupies the upper portion */
+    bottom: auto;
+    /* aspect-ratio fallback: 4:5 portrait */
+    aspect-ratio: 4 / 5;
+    max-height: 65svh;
+    width: 100%;
+  }
+}
+
+/* ── Desktop layout: video fills the entire hero ──────────────── */
+@media (min-width: 768px) {
+  .onz-hero-video-wrap {
+    inset: 0;
+  }
+}
+
+/* ── <video> element ───────────────────────────────────────────── */
+.onz-hero-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;  /* show cup + pour, not just background */
+}
+
+@media (min-width: 768px) {
+  .onz-hero-video {
+    object-position: center 35%;
+  }
+}
+
+/* ── Gradient overlays ─────────────────────────────────────────── */
+
+/* Mobile: fade the bottom edge of the video into the espresso bg,
+   so the headline sits on a smooth dark gradient, not a hard cut. */
+.onz-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,                       /* top — no tint */
+    transparent 38%,
+    rgba(26, 10, 6, 0.30) 55%,            /* soft shadow starts */
+    rgba(26, 10, 6, 0.78) 72%,            /* darkens toward headline */
+    var(--espresso) 88%                    /* solid at headline */
+  );
+}
+
+/* Desktop: lighter overlay — video fills, headline still readable */
+@media (min-width: 768px) {
+  .onz-hero::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(58, 30, 23, 0.12) 0%,
+      transparent 22%,
+      transparent 50%,
+      rgba(26, 10, 6, 0.65) 78%,
+      var(--espresso) 100%
+    );
+  }
+}
+
+/* ── prefers-reduced-motion: show poster, suppress autoplay ──────
+   The <video> is hidden via CSS; its poster-image background covers
+   the wrap so there is no blank flash.                             */
+@media (prefers-reduced-motion: reduce) {
+  .onz-hero-video {
+    display: none;
+  }
+  .onz-hero-video-wrap {
+    /* Show the poster as a background image */
+    background: url('../assets/video/hero-pour-poster.jpg') center 40% / cover no-repeat;
+  }
+}
+
+/* ── Squiggle texture overlay ─────────────────────────────────── */
+.onz-hero__squiggles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.055;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ── Headline ─────────────────────────────────────────────────── */
+.onz-hero__text {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  padding-block-end: clamp(2.5rem, 8svh, 5rem);
+  width: 100%;
+}
+
+.onz-hero__headline {
+  color: var(--cream);
+  font-size: var(--text-hero);
+  font-weight: var(--fw-black);
+  line-height: 1.05;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45);
+}
+
+[dir="rtl"] .onz-hero__headline {
+  line-height: 1.2;
+}
+
+.onz-hero__tagline {
+  margin-block-start: var(--space-xs);
+  color: var(--orange);
+  font-size: var(--text-sm);
+  letter-spacing: 0.18em;
+  font-weight: var(--fw-semi);
+}
+
+/* Remove old .onz-hero__img rule (cup.png is now only in brew) */
+
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   2. WAVE STRIP  (between hero and brew)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* Handled by .onz-squiggle-strip in components.css */
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   3. BREW SECTION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-brew {
+  background: var(--cream);
+  padding-block: var(--space-2xl);
+  position: relative;
+  z-index: 2;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.onz-brew__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-black);
+  color: var(--espresso);
+  margin-block-end: var(--space-sm);
+}
+
+.onz-brew__body {
+  font-size: var(--text-md);
+  color: var(--espresso-60);
+  margin-block-end: var(--space-lg);
+  font-weight: var(--fw-semi);
+}
+
+/* ── Brew Photo Band (cup.png, full-width) ─────────────────── */
+.onz-brew__photo-band {
+  position: relative;
+  /* Dark espresso bg peeks around the wavy edges */
+  background: var(--espresso);
+  /* No left/right overflow — wavy SVGs are inside the band */
+  overflow: hidden;
+  margin-block: var(--space-lg);
+  /* Ensure the band is full-bleed outside any container */
+  width: 100%;
+}
+
+/* Wavy cream top edge (sits on top of the photo, overlapping from above) */
+.onz-brew__band-wave-top {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  width: 100%;
+  height: clamp(40px, 6vw, 72px);
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Wavy cream bottom edge */
+.onz-brew__band-wave-bot {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  width: 100%;
+  height: clamp(40px, 6vw, 72px);
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* The actual cup photo */
+.onz-brew__photo-cup {
+  display: block;
+  width: 100%;
+  /* Portrait photo: cap to a reasonable height so it doesn't overwhelm mobile */
+  max-height: clamp(280px, 80vw, 520px);
+  object-fit: cover;
+  object-position: center 20%;  /* show the cup top + logo clearly */
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .onz-brew__photo-cup {
+    max-height: clamp(380px, 50vw, 620px);
+    object-position: center 15%;
+  }
+  .onz-brew__photo-band {
+    margin-block: var(--space-xl);
+  }
+}
+
+
+
+
+.onz-brew__visual-wrap.is-latte-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.onz-brew__visual {
+  display: block;
+  width: min(340px, 78vw);
+  height: auto;
+  /* Floating hover */
+  animation: latteFloat 5s ease-in-out infinite;
+}
+
+@keyframes latteFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ── Milk Stream ───────────────────────────────────────────── */
+.onz-stream-main,
+.onz-stream-shine {
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
+  transition: stroke-dashoffset 0.9s var(--ease-out) 0.15s;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-stream-main,
+.onz-brew__visual-wrap.is-latte-visible .onz-stream-shine {
+  stroke-dashoffset: 0;
+}
+
+/* ── Heart Bloom ───────────────────────────────────────────── */
+.onz-heart-fill,
+.onz-heart-inner,
+.onz-heart-glow {
+  opacity: 0;
+  transform-origin: 210px 252px;
+  transform: scale(0.15) rotate(-8deg);
+  transition:
+    opacity   0.7s var(--ease-out) 0.55s,
+    transform 0.7s var(--ease-out) 0.55s;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-heart-fill {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-heart-inner {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  transition-delay: 0.65s;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-heart-glow {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  transition-delay: 0.60s;
+}
+
+/* ── Foam dots fade in ─────────────────────────────────────── */
+.onz-foam-dots {
+  opacity: 0;
+  transition: opacity 0.6s ease-out 0.85s;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-foam-dots {
+  opacity: 1;
+}
+
+/* ── Ripple pulse (infinite, starts after visible) ─────────── */
+.onz-ripple-1,
+.onz-ripple-2,
+.onz-ripple-3 {
+  transform-origin: 234px 212px;
+  animation: none; /* activated by JS */
+  opacity: 0;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-ripple-1 {
+  animation: ripplePulse 2.4s ease-out 1.0s infinite;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-ripple-2 {
+  animation: ripplePulse 2.4s ease-out 1.3s infinite;
+}
+
+.onz-brew__visual-wrap.is-latte-visible .onz-ripple-3 {
+  animation: ripplePulse 2.4s ease-out 1.6s infinite;
+}
+
+@keyframes ripplePulse {
+  0%   { transform: scale(0.4); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ── Reduced-motion overrides ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .onz-brew__visual-wrap {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .onz-brew__visual {
+    animation: none;
+  }
+  .onz-stream-main,
+  .onz-stream-shine {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .onz-heart-fill,
+  .onz-heart-inner,
+  .onz-heart-glow {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .onz-foam-dots {
+    opacity: 1;
+    transition: none;
+  }
+  .onz-ripple-1,
+  .onz-ripple-2,
+  .onz-ripple-3 {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   4. BITES SECTION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-bites {
+  background: var(--teal);
+  padding-block-start: calc(var(--space-2xl) + var(--wave-h));
+  padding-block-end: var(--space-2xl);
+  position: relative;
+  z-index: 2;
+  /* overflow-x hidden prevents horizontal bleed; overflow-y visible lets wave SVG extend above */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* Wavy top edge for bites — wave fills with teal, sits on top of brew */
+.onz-bites__wave-top {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  transform: translateY(-99%);
+  width: 100%;
+  pointer-events: none;
+  line-height: 0;
+  font-size: 0;
+  z-index: 3;
+}
+
+.onz-bites__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-black);
+  color: var(--espresso);
+  margin-block-end: var(--space-sm);
+}
+
+.onz-bites__body {
+  font-size: var(--text-md);
+  color: var(--espresso);
+  margin-block-end: var(--space-lg);
+  font-weight: var(--fw-semi);
+  opacity: 0.75;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   5. VIBES SECTION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-vibes {
+  background: var(--espresso);
+  padding-block-start: calc(var(--space-2xl) + var(--wave-h));
+  padding-block-end: 0;
+  position: relative;
+  z-index: 2;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* Wavy top edge fills with espresso, overlaps bites */
+.onz-vibes__wave-top {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  transform: translateY(-99%);
+  width: 100%;
+  pointer-events: none;
+  line-height: 0;
+  font-size: 0;
+  z-index: 3;
+}
+
+.onz-vibes__text {
+  padding-block-end: var(--space-xl);
+}
+
+.onz-vibes__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-black);
+  color: var(--cream);
+  margin-block-end: var(--space-sm);
+}
+
+.onz-vibes__body {
+  font-size: var(--text-md);
+  color: rgba(255,246,233,0.7);
+  font-weight: var(--fw-semi);
+}
+
+/* Large storefront image — full-bleed portrait, ~80svh */
+.onz-vibes__img-wrap {
+  position: relative;
+  width: 100%;
+  margin-block-start: var(--space-lg);
+  overflow: hidden;
+}
+
+/* Wavy top edge on the image itself */
+.onz-vibes__img-wave {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 0;
+  font-size: 0;
+}
+
+.onz-vibes__storefront {
+  display: block;
+  width: 100%;
+  height: clamp(60svh, 80svh, 90svh);
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   6. VISIT US SECTION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-visit {
+  background: var(--cream);
+  padding-block-start: calc(var(--space-2xl) + var(--wave-h));
+  padding-block-end: var(--space-2xl);
+  position: relative;
+  z-index: 2;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* Wavy top edge fills with cream, overlaps espresso vibes */
+.onz-visit__wave-top {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  transform: translateY(-99%);
+  width: 100%;
+  pointer-events: none;
+  line-height: 0;
+  font-size: 0;
+  z-index: 3;
+}
+
+.onz-visit__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-black);
+  color: var(--espresso);
+  margin-block-end: var(--space-sm);
+}
+
+.onz-visit__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-block-end: var(--space-lg);
+}
+
+.onz-visit__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: var(--text-md);
+  color: var(--espresso);
+  font-weight: var(--fw-semi);
+  justify-content: center;
+  text-align: start;
+}
+
+.onz-visit__info-item svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: var(--orange);
+  margin-block-start: 0.15em;
+}
+
+/* Placeholder styling */
+.onz-placeholder {
+  color: var(--kraft);
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   7. FOOTER
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-footer {
+  background: var(--espresso);
+  padding-block-start: calc(var(--space-xl) + var(--wave-h));
+  padding-block-end: var(--space-xl);
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  z-index: 2;
+}
+
+/* Wavy top edge fills espresso, overlaps cream visit */
+.onz-footer__wave-top {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  transform: translateY(-99%);
+  width: 100%;
+  pointer-events: none;
+  line-height: 0;
+  font-size: 0;
+  z-index: 3;
+}
+
+.onz-footer__logo {
+  margin-block-end: var(--space-lg);
+}
+
+.onz-footer__logo img,
+.onz-footer__logo svg {
+  height: 40px;
+  width: auto;
+  margin-inline: auto;
+}
+
+/* Nav links groups */
+.onz-footer__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-block-end: var(--space-lg);
+}
+
+.onz-footer__link {
+  color: rgba(255,246,233,0.7);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semi);
+  text-decoration: none;
+  transition: color var(--dur-fast);
+}
+
+.onz-footer__link:hover {
+  color: var(--orange);
+}
+
+/* Social icons row */
+.onz-footer__socials {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-block-end: var(--space-lg);
+}
+
+.onz-footer__social-link {
+  color: var(--cream);
+  opacity: 0.75;
+  transition: opacity var(--dur-fast), color var(--dur-fast);
+  display: flex;
+  align-items: center;
+}
+
+.onz-footer__social-link:hover {
+  opacity: 1;
+  color: var(--orange);
+}
+
+.onz-footer__social-link svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+/* Orange divider bar in footer */
+.onz-footer__bar {
+  width: 48px;
+  height: 3px;
+  background: var(--orange);
+  border-radius: 2px;
+  margin-inline: auto;
+  margin-block: var(--space-md);
+}
+
+/* Copyright */
+.onz-footer__copy {
+  color: rgba(255,246,233,0.4);
+  font-size: var(--text-xs);
+  text-align: center;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE — Tablet / Desktop
+   Same block-based look, centered max-width for text,
+   full-bleed for colors + images.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media (min-width: 768px) {
+  .onz-hero__headline {
+    font-size: clamp(3rem, 6vw, 5rem);
+  }
+
+  .onz-brew, .onz-bites, .onz-visit {
+    padding-block: var(--space-2xl);
+  }
+
+  .onz-vibes__storefront {
+    height: clamp(70svh, 85svh, 95svh);
+  }
+}
+
+@media (min-width: 1200px) {
+  .onz-hero__headline {
+    font-size: clamp(3.5rem, 5vw, 5.5rem);
+  }
+
+  .onz-visit__info {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .onz-visit__info-item {
+    justify-content: flex-start;
+  }
+}

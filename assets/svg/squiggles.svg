@@ -1,0 +1,83 @@
+<!--
+  ONZGO Squiggles — Hand-drawn doodle paths
+  Reusable SVG sprite for dividers, textures, and corner deco.
+  All paths use stroke-linecap="round" for hand-drawn feel.
+  Reference: the doodle glass art on the storefront (loops, waves, sleepy eye).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" style="display:none" aria-hidden="true">
+  <defs>
+    <!-- ── Strip wave: repeating squiggly line across full width ── -->
+    <symbol id="sqg-strip-line" viewBox="0 0 1200 24">
+      <path class="onz-squiggle-path"
+        d="M0 12
+           C30 4, 70 20, 100 12
+           C130 4, 170 20, 200 12
+           C230 4, 270 20, 300 12
+           C330 4, 370 20, 400 12
+           C430 4, 470 20, 500 12
+           C530 4, 570 20, 600 12
+           C630 4, 670 20, 700 12
+           C730 4, 770 20, 800 12
+           C830 4, 870 20, 900 12
+           C930 4, 970 20, 1000 12
+           C1030 4, 1070 20, 1100 12
+           C1130 4, 1170 20, 1200 12"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- ── Corner deco: loops and swirls (bottom-left deco) ── -->
+    <symbol id="sqg-corner" viewBox="0 0 160 160">
+      <!-- Big swirl -->
+      <path d="M20 140 C20 80, 80 20, 120 50 C150 70, 145 120, 100 130 C65 138, 45 110, 60 85 C75 60, 110 62, 115 85"
+        fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Small loop -->
+      <path d="M30 100 C35 90, 50 88, 55 96 C60 104, 50 114, 42 110 C36 107, 35 100, 40 96"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Wavy stroke -->
+      <path d="M8 60 C14 54, 22 66, 28 60 C34 54, 42 66, 48 60"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Sleepy eye -->
+      <ellipse cx="85" cy="48" rx="14" ry="8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="85" cy="50" rx="5" ry="5" fill="currentColor" opacity="0.5"/>
+      <!-- Eyelashes -->
+      <line x1="78" y1="41" x2="76" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="85" y1="40" x2="85" y2="34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="92" y1="41" x2="94" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Small dots -->
+      <circle cx="140" cy="25" r="3" fill="currentColor" opacity="0.6"/>
+      <circle cx="150" cy="40" r="2" fill="currentColor" opacity="0.4"/>
+      <circle cx="130" cy="15" r="2" fill="currentColor" opacity="0.5"/>
+    </symbol>
+
+    <!-- ── Hero texture: scattered squiggles ── -->
+    <symbol id="sqg-texture" viewBox="0 0 400 400">
+      <path d="M20 50 C40 30, 80 70, 60 90 C40 110, 20 80, 40 60"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M120 20 C150 10, 190 40, 160 60 C140 72, 110 50, 130 35"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M280 80 C300 60, 340 100, 320 120 C300 140, 270 110, 290 90"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M60 200 C80 180, 120 220, 100 240 C80 260, 50 230, 70 210"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M200 160 C230 150, 270 180, 240 200 C220 212, 190 190, 210 175"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M350 200 C370 180, 400 220, 380 240"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M10 320 C30 300, 70 340, 50 360"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M160 300 C180 280, 220 320, 200 340 C180 360, 150 330, 170 310"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M320 300 C340 280, 380 320, 360 340 C340 360, 310 330, 330 310"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Wave lines -->
+      <path d="M0 150 C20 140, 40 160, 60 150 C80 140, 100 160, 120 150"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      <path d="M240 130 C260 120, 280 140, 300 130 C320 120, 340 140, 360 130"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    </symbol>
+  </defs>
+</svg>

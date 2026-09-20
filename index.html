@@ -1,338 +1,719 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#3A1E17"/>
-  <title>ONZGO — Brew • Bites • Vibes</title>
-  <meta name="description" content="ONZGO — Brew • Bites • Vibes"/>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="./style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ONZGO — قهوة طازجة، أكل لذيذ، أجواء حلوة. Fresh coffee, tasty bites, good vibes." />
+  <meta name="theme-color" content="#3A1E17" />
+
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Cairo — covers Arabic + Latin; weights 400, 600, 800, 900 -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!--
+    Bootstrap 5.3.3 CSS — RTL by default (Arabic is default lang).
+    id="bs-css" allows i18n.js to swap the href on language change.
+  -->
+  <link
+    id="bs-css"
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+    integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLX5UkJateAEy04OWMjnrC0Tqol5GHxNimV5"
+    crossorigin="anonymous"
+  />
+
+  <!-- ONZGO Styles (in dependency order) -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+
+  <title>ONZGO — قهوة ماشية</title>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════
-     OVERLAY MENU (Espresso background with doodles)
-═══════════════════════════════════════════════ -->
-<div id="overlay" role="dialog" aria-modal="true" aria-label="Menu">
-  <!-- Hand-drawn glass doodle background -->
-  <svg class="doodle-bg" viewBox="0 0 400 700" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M30 80 Q80 40 130 80 Q180 120 230 80 Q280 40 330 80 Q380 120 430 80" stroke="#FFF6E9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M30 180 Q80 140 130 180 Q180 220 230 180 Q280 140 330 180 Q380 220 430 180" stroke="#FFF6E9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M30 280 Q80 240 130 280 Q180 320 230 280 Q280 240 330 280 Q380 320 430 280" stroke="#FFF6E9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M30 380 Q80 340 130 380 Q180 420 230 380 Q280 340 330 380 Q380 420 430 380" stroke="#FFF6E9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M30 480 Q80 440 130 480 Q180 520 230 480 Q280 440 330 480 Q380 520 430 480" stroke="#FFF6E9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M30 580 Q80 540 130 580 Q180 620 230 580 Q280 540 330 580 Q380 620 430 580" stroke="#FFF6E9" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <!-- Loop doodle -->
-    <path d="M310 140 Q290 110 320 90 Q350 70 360 100 Q370 130 340 145 Q310 160 315 190 Q320 220 345 215" stroke="#F26B1D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <!-- Sleepy eye doodle -->
-    <path d="M70 510 Q90 490 110 510" stroke="#F26B1D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <circle cx="90" cy="516" r="2.5" fill="#F26B1D"/>
-  </svg>
+  <!-- ═══════════════════════════════════════════════════════════
+       FIXED HEADER
+       ═══════════════════════════════════════════════════════════ -->
+  <header class="onz-header" role="banner">
 
-  <nav id="overlay-nav">
-    <!-- Links generated dynamically by script.js -->
-  </nav>
-
-  <p class="overlay-tagline">BREW &bull; BITES &bull; VIBES</p>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     1. HEADER (Centered logo, AR|EN toggle, Hamburger)
-═══════════════════════════════════════════════ -->
-<header id="header">
-  <!-- AR | EN Toggle Button -->
-  <button id="lang-btn" data-i18n="langToggle" aria-label="Switch language">EN</button>
-
-  <!-- Centered Logo (Cream variant on dark header) -->
-  <a href="#" class="logo" aria-label="ONZGO Home">
-    <img id="header-logo" src="/assets/logo-light.svg" alt="ONZGO — Brew • Bites • Vibes"/>
-  </a>
-
-  <!-- Hamburger Menu Button -->
-  <button id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="overlay">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</header>
-
-<!-- ═══════════════════════════════════════════════
-     2. HERO (Espresso gradient, Cup product image, Headline, Pill CTA)
-═══════════════════════════════════════════════ -->
-<section id="hero" aria-label="Hero">
-  <!-- Hand-drawn glass squiggle doodles — draw themselves on scroll -->
-  <svg class="squiggle-field" viewBox="0 0 800 900" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <path class="squig-draw" d="M0 60 Q100 20 200 60 Q300 100 400 60 Q500 20 600 60 Q700 100 800 60" stroke="#F26B1D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path class="squig-draw" d="M0 140 Q100 100 200 140 Q300 180 400 140 Q500 100 600 140 Q700 180 800 140" stroke="#C9A579" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path class="squig-draw" d="M0 220 Q100 180 200 220 Q300 260 400 220 Q500 180 600 220 Q700 260 800 220" stroke="#F26B1D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path class="squig-draw" d="M0 700 Q100 660 200 700 Q300 740 400 700 Q500 660 600 700 Q700 740 800 700" stroke="#F26B1D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path class="squig-draw" d="M0 780 Q100 740 200 780 Q300 820 400 780 Q500 740 600 780 Q700 820 800 780" stroke="#C9A579" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path class="squig-draw" d="M0 860 Q100 820 200 860 Q300 900 400 860 Q500 820 600 860 Q700 900 800 860" stroke="#F26B1D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <!-- Loop doodle left -->
-    <path class="squig-draw" d="M60 380 Q40 350 70 330 Q100 310 110 340 Q120 370 90 385 Q60 400 65 430 Q70 460 95 455" stroke="#FFF6E9" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <!-- Sleepy eye doodle right -->
-    <path d="M720 450 Q740 430 760 450" stroke="#FFF6E9" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <circle cx="740" cy="456" r="3" fill="#FFF6E9" opacity="0.6"/>
-  </svg>
-
-  <!-- Large product image (kraft cup with subtle scroll parallax) -->
-  <div class="cup-wrap">
-    <!-- PLACEHOLDER: Replace src with your cropped ONZGO kraft cup photo (e.g. assets/images/cup.png) -->
-    <img src="https://images.unsplash.com/photo-1509785307050-d4066910ec1e?q=80&w=700&auto=format&fit=crop"
-         alt="ONZGO kraft coffee cup"
-         loading="eager"
-         width="340" height="400"/>
-  </div>
-
-  <!-- Hero Headline & Pill Button below the product -->
-  <div class="hero-text">
-    <h1 class="t-hero">
-      <span data-i18n="heroHeadline"></span>
-    </h1>
-    <a href="https://wa.me/[WHATSAPP NUMBER]" target="_blank" rel="noopener" class="pill pill-orange t-pill">
-      <span data-i18n="heroCta"></span>
-      <span class="arrow">←</span>
-    </a>
-  </div>
-
-  <!-- Scroll cue -->
-  <div class="scroll-cue" aria-hidden="true">
-    <div class="bar"></div>
-    <div class="dot"></div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════
-     3. WAVY DIVIDER (Squiggle pattern strip on cream)
-═══════════════════════════════════════════════ -->
-<!-- Wave: Espresso → Cream -->
-<div class="wave-strip" aria-hidden="true">
-  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,0 C240,70 480,70 720,40 C960,10 1200,10 1440,0 L1440,70 L0,70 Z" fill="#FFF6E9"/>
-    <rect width="1440" height="2" fill="#3A1E17"/>
-  </svg>
-</div>
-
-<!-- Thin wavy line-pattern strip on cream -->
-<div class="squiggle-strip" aria-hidden="true">
-  <svg viewBox="0 0 800 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path class="squig-draw" d="M0 15 Q25 5 50 15 Q75 25 100 15 Q125 5 150 15 Q175 25 200 15 Q225 5 250 15 Q275 25 300 15 Q325 5 350 15 Q375 25 400 15 Q425 5 450 15 Q475 25 500 15 Q525 5 550 15 Q575 25 600 15 Q625 5 650 15 Q675 25 700 15 Q725 5 750 15 Q775 25 800 15" stroke="#3A1E17" stroke-width="2.5" stroke-linecap="round"/>
-  </svg>
-</div>
-
-<!-- Wave: Cream → Orange -->
-<div class="wave-strip" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,60 C360,0 720,0 1080,30 C1260,45 1380,30 1440,60 L0,60 Z" fill="#F26B1D"/>
-  </svg>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     4. BREW BLOCK (Orange solid block, one idea)
-═══════════════════════════════════════════════ -->
-<section id="brew" aria-label="Brew">
-  <div class="section-inner">
-    <h2 class="t-section reveal" data-i18n="brewTitle"></h2>
-    <p class="t-sub reveal reveal-d1" data-i18n="brewText"></p>
-    <!-- PLACEHOLDER: Links to menu sheet if provided; otherwise placeholder -->
-    <a href="#[MENU LINK]" class="pill pill-cream t-pill reveal reveal-d2">
-      <span data-i18n="brewCta"></span>
-      <span class="arrow">←</span>
-    </a>
-  </div>
-</section>
-
-<!-- Wave: Orange → Teal -->
-<div class="wave-strip" aria-hidden="true">
-  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,0 C480,70 960,0 1440,0 L1440,70 L0,70 Z" fill="#2CBFA6"/>
-  </svg>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     5. BITES BLOCK (Teal solid block, one idea)
-═══════════════════════════════════════════════ -->
-<section id="bites" aria-label="Bites">
-  <div class="section-inner">
-    <h2 class="t-section reveal" data-i18n="bitesTitle"></h2>
-    <p class="t-sub reveal reveal-d1" data-i18n="bitesText"></p>
-    <!-- PLACEHOLDER: Links to menu sheet if provided; otherwise placeholder -->
-    <a href="#[MENU LINK]" class="pill pill-espresso t-pill reveal reveal-d2">
-      <span data-i18n="bitesCta"></span>
-      <span class="arrow">←</span>
-    </a>
-  </div>
-</section>
-
-<!-- Wave: Teal → Royal Blue -->
-<div class="wave-strip" aria-hidden="true">
-  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,70 C360,0 1080,0 1440,70 L1440,70 L0,70 Z" fill="#1F3BB3"/>
-  </svg>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     6. VIBES BLOCK (Royal Blue block, Storefront photo with wavy top edge)
-═══════════════════════════════════════════════ -->
-<section id="vibes" aria-label="Vibes">
-  <div class="section-inner">
-    <h2 class="t-section reveal" data-i18n="vibesTitle"></h2>
-    <p class="t-sub reveal reveal-d1" data-i18n="vibesText"></p>
-  </div>
-
-  <!-- Storefront photo with curved wavy overlap top edge -->
-  <div class="vibes-photo reveal">
-    <!-- PLACEHOLDER: Replace src with your cropped ONZGO storefront photo (e.g. assets/images/storefront.jpg) -->
-    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop"
-         alt="ONZGO storefront"
-         loading="lazy"
-         width="1200" height="675"/>
-  </div>
-</section>
-
-<!-- Wave: Royal Blue → Cream -->
-<div class="wave-strip" aria-hidden="true">
-  <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,0 C480,70 960,70 1440,0 L1440,70 L0,70 Z" fill="#FFF6E9"/>
-  </svg>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     7. VISIT US BLOCK (Cream solid block, Info, Directions CTA, Squiggle decoration)
-═══════════════════════════════════════════════ -->
-<section id="visit" aria-label="Visit us">
-  <div class="section-inner">
-    <h2 class="t-section reveal" data-i18n="visitTitle"></h2>
-
-    <!-- Hand-drawn squiggle decoration -->
-    <div class="visit-squiggle reveal reveal-d1" aria-hidden="true">
-      <svg width="120" height="20" viewBox="0 0 120 20" fill="none">
-        <path class="squig-draw" d="M0 10 Q15 2 30 10 Q45 18 60 10 Q75 2 90 10 Q105 18 120 10" stroke="#F26B1D" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
+    <!-- Hamburger (inline-start) -->
+    <div class="onz-header__hamburger">
+      <button
+        id="hamburger-btn"
+        class="onz-hamburger"
+        type="button"
+        aria-controls="onz-offcanvas"
+        aria-expanded="false"
+        aria-label="فتح القائمة"
+      >
+        <span class="onz-hamburger__bar"></span>
+        <span class="onz-hamburger__bar"></span>
+        <span class="onz-hamburger__bar"></span>
+        <span class="onz-sr-only">Menu</span>
+      </button>
     </div>
 
-    <!-- Info details card: Address, Hours, Phone -->
-    <div class="info-card reveal reveal-d1">
-      <!-- Address -->
-      <div class="info-row">
-        <div class="info-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F26B1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-        </div>
-        <div>
-          <div class="info-label" data-i18n="visitAddrLabel"></div>
-          <div class="info-value" data-i18n="visitAddr"></div>
-        </div>
-      </div>
-
-      <!-- Opening Hours -->
-      <div class="info-row">
-        <div class="info-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F26B1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
-          </svg>
-        </div>
-        <div style="width:100%">
-          <div class="info-label" data-i18n="visitHoursLabel"></div>
-          <div class="info-value" data-i18n="visitHours"></div>
-        </div>
-      </div>
-
-      <!-- Phone -->
-      <div class="info-row">
-        <div class="info-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F26B1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="info-label" data-i18n="visitPhoneLabel"></div>
-          <div class="info-value"><a href="tel:[PHONE]" dir="ltr" data-i18n="visitPhone"></a></div>
-        </div>
-      </div>
+    <!-- Logo (center) -->
+    <div class="onz-header__logo">
+      <a href="#" aria-label="ONZGO — الصفحة الرئيسية">
+        <img
+          src="assets/svg/logo-light.svg"
+          alt="ONZGO logo"
+          width="160"
+          height="48"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </a>
     </div>
 
-    <!-- Get Directions Pill Button -->
-    <!-- PLACEHOLDER: Replace href with your Google Maps link -->
-    <a href="[GOOGLE MAPS LINK]" target="_blank" rel="noopener" class="pill pill-espresso t-pill reveal reveal-d2">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-        <circle cx="12" cy="10" r="3"/>
+    <!-- Language Toggle (inline-end) -->
+    <div class="onz-header__lang">
+      <button
+        id="lang-toggle"
+        class="onz-lang-toggle"
+        type="button"
+        aria-label="Switch to English"
+      >EN</button>
+    </div>
+
+  </header><!-- /header -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BOOTSTRAP OFFCANVAS — Full-screen Nav Overlay
+       ═══════════════════════════════════════════════════════════ -->
+  <div
+    id="onz-offcanvas"
+    class="onz-offcanvas offcanvas offcanvas-start"
+    tabindex="-1"
+    aria-labelledby="offcanvas-label"
+  >
+    <div class="offcanvas-header">
+      <img
+        class="onz-offcanvas__logo"
+        src="assets/svg/logo-light.svg"
+        alt="ONZGO"
+        width="140"
+        height="42"
+      />
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="إغلاق"
+        data-i18n-attr="aria-label:navClose"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav aria-label="Main navigation" id="offcanvas-label">
+        <a href="#brew"  class="onz-nav-link" data-offcanvas-close data-i18n="navBrew">القهوة</a>
+        <a href="#bites" class="onz-nav-link" data-offcanvas-close data-i18n="navBites">الأكل</a>
+        <a href="#vibes" class="onz-nav-link" data-offcanvas-close data-i18n="navVibes">الأجواء</a>
+        <a href="#visit" class="onz-nav-link" data-offcanvas-close data-i18n="navVisit">زورونا</a>
+        <!-- Menu PDF link -->
+        <a
+          href="assets/menu/menu-ar.pdf"
+          class="onz-nav-link onz-nav-link--menu"
+          data-menu-pdf
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="افتح قائمة المنيو"
+          data-i18n-attr="aria-label:offcanvasMenuAria"
+          data-i18n="navMenu"
+        >شوف المنيو</a>
+      </nav>
+    </div>
+  </div><!-- /offcanvas -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════ -->
+  <main>
+
+    <!-- ─────────────────────────────────────────────────────────
+         1. HERO — 100svh, espresso gradient, cup.png dominant.
+         No button in the hero (Costa reference rule).
+    ──────────────────────────────────────────────────────────── -->
+    <section id="hero" class="onz-hero" aria-label="Hero">
+
+      <!-- ── Hero video ───────────────────────────────────────────
+           Plays once (no loop). Freezes on last frame.
+           prefers-reduced-motion: autoplay is suppressed by JS;
+           poster stays visible.
+           Poster also shown while video loads / if autoplay blocks.
+      ──────────────────────────────────────────────────────────── -->
+      <div class="onz-hero-video-wrap">
+        <video
+          id="onz-hero-video"
+          class="onz-hero-video"
+          muted
+          playsinline
+          preload="auto"
+          poster="assets/video/hero-pour-poster.jpg"
+          width="1280"
+          height="720"
+        >
+          <!--
+            Mobile-first source: portrait 4:5 (614×768).
+            Desktop source: landscape 16:9 (1280×720).
+            Browser picks the first <source> whose media matches.
+          -->
+          <source
+            media="(max-width: 767px)"
+            src="assets/video/hero-pour-mobile.mp4"
+            type="video/mp4"
+          >
+          <source
+            src="assets/video/hero-pour.mp4"
+            type="video/mp4"
+          >
+        </video>
+      </div>
+
+      <!-- Faint squiggle texture overlay (mimics storefront glass doodles) -->
+      <svg
+        class="onz-hero__squiggles"
+        viewBox="0 0 400 800"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M20 100 C40 80, 80 120, 60 140 C40 160, 20 130, 40 110" fill="none" stroke="#FFF6E9" stroke-width="2" stroke-linecap="round"/>
+        <path d="M320 80 C340 60, 380 100, 360 120 C340 140, 310 110, 330 90" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M60 300 C80 280, 120 320, 100 340 C80 360, 50 330, 70 310" fill="none" stroke="#FFF6E9" stroke-width="2" stroke-linecap="round"/>
+        <path d="M280 320 C300 300, 340 340, 320 360 C300 380, 270 350, 290 330" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M150 480 C170 460, 210 500, 190 520 C170 540, 140 510, 160 490" fill="none" stroke="#FFF6E9" stroke-width="2" stroke-linecap="round"/>
+        <!-- Sleepy eye (from storefront art) -->
+        <ellipse cx="340" cy="250" rx="18" ry="10" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+        <ellipse cx="340" cy="252" rx="6" ry="6" fill="#FFF6E9" opacity="0.4"/>
+        <line x1="332" y1="241" x2="330" y2="234" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="340" y1="240" x2="340" y2="232" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="348" y1="241" x2="350" y2="234" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Wave lines -->
+        <path d="M0 600 C20 590, 40 610, 60 600 C80 590, 100 610, 120 600 C140 590, 160 610, 180 600" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <path d="M220 650 C240 640, 260 660, 280 650 C300 640, 320 660, 340 650" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
       </svg>
-      <span data-i18n="visitMapCta"></span>
-      <span class="arrow">←</span>
-    </a>
-  </div>
-</section>
 
-<!-- Wave: Cream → Espresso -->
-<div class="wave-strip" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,60 C360,0 1080,0 1440,60 L1440,60 L0,60 Z" fill="#3A1E17"/>
-  </svg>
-</div>
+      <!-- Headline (bottom of hero, over gradient) -->
+      <div class="onz-hero__text">
+        <h1 class="onz-hero__headline" data-i18n="heroHeadline">
+          قهوتك ماشية معاك.
+        </h1>
+        <p class="onz-hero__tagline" data-i18n="heroTagline">
+          BREW • BITES • VIBES
+        </p>
+      </div>
 
-<!-- ═══════════════════════════════════════════════
-     8. FOOTER (Espresso solid block, Quick links, Social icons, Legal)
-═══════════════════════════════════════════════ -->
-<footer id="footer">
-  <!-- Centered Logo (Light/Cream variant) -->
-  <div class="foot-logo">
-    <img src="/assets/logo-light.svg" alt="ONZGO Logo"/>
-  </div>
+    </section><!-- /hero -->
 
-  <!-- Stacked Quick Links -->
-  <div class="foot-links">
-    <a href="#brew"  data-i18n="navBrew"></a>
-    <a href="#bites" data-i18n="navBites"></a>
-    <a href="#vibes" data-i18n="navVibes"></a>
-    <a href="#visit" data-i18n="navVisit"></a>
-  </div>
 
-  <!-- Social Icons -->
-  <div class="social-row">
-    <!-- PLACEHOLDER: Replace href with real Instagram URL -->
-    <a href="[INSTAGRAM LINK]" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+
+    <!-- ─────────────────────────────────────────────────────────
+         2. WAVE STRIP — Breathing pause / divider (cream bg)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="onz-squiggle-strip" role="separator" aria-hidden="true">
+      <svg
+        class="onz-squiggle-strip__svg"
+        viewBox="0 0 1200 72"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <!-- Three rows of hand-drawn squiggly waves -->
+        <path class="onz-squiggle-path"
+          d="M0 20 C50 8,110 32,160 20 C210 8,270 32,320 20 C370 8,430 32,480 20
+             C530 8,590 32,640 20 C690 8,750 32,800 20 C850 8,910 32,960 20
+             C1010 8,1070 32,1120 20 C1150 12,1180 26,1200 20"
+          stroke="#C9A579" stroke-width="2" stroke-linecap="round" fill="none"
+        />
+        <path class="onz-squiggle-path"
+          d="M0 40 C50 28,110 52,160 40 C210 28,270 52,320 40 C370 28,430 52,480 40
+             C530 28,590 52,640 40 C690 28,750 52,800 40 C850 28,910 52,960 40
+             C1010 28,1070 52,1120 40 C1150 32,1180 46,1200 40"
+          stroke="#C9A579" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"
+        />
+        <path class="onz-squiggle-path"
+          d="M0 60 C30 50,70 68,100 60 C130 50,170 68,200 60 C230 50,270 68,300 60
+             C330 50,370 68,400 60 C430 50,470 68,500 60 C530 50,570 68,600 60
+             C630 50,670 68,700 60 C730 50,770 68,800 60 C830 50,870 68,900 60
+             C930 50,970 68,1000 60 C1030 50,1070 68,1100 60 C1140 50,1180 68,1200 60"
+          stroke="#F26B1D" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"
+        />
       </svg>
-    </a>
-    <!-- PLACEHOLDER: Replace href with real Facebook URL -->
-    <a href="[FACEBOOK LINK]" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </div><!-- /wave strip 1 -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         3. BREW — Cream block
+    ──────────────────────────────────────────────────────────── -->
+    <section id="brew" class="onz-brew" aria-labelledby="brew-title">
+
+      <!-- Corner squiggle deco (inline-end / top) -->
+      <svg
+        class="onz-squiggle-deco onz-squiggle-deco--tr"
+        width="160" height="160"
+        viewBox="0 0 160 160"
+        aria-hidden="true" focusable="false"
+        color="#3A1E17"
+      >
+        <path d="M140 20 C140 60,100 100,60 110 C30 118,10 100,25 75 C40 50,75 52,80 75"
+          fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M120 8 C125 18,110 28,115 36 C120 44,108 40,108 30"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="148" cy="12" r="4" fill="currentColor" opacity="0.4"/>
+        <circle cx="138" cy="5"  r="2.5" fill="currentColor" opacity="0.3"/>
       </svg>
-    </a>
-  </div>
 
-  <!-- Legal & Copyright -->
-  <p class="legal" data-i18n="footerLegal"></p>
-</footer>
+      <!-- ── cup.png photo band (full-width, outside container) ─── -->
+      <div class="onz-brew__photo-band onz-reveal">
 
-<!-- ═══════════════════════════════════════════════
-     9. FLOATING ROUND BUTTON (WhatsApp order link in bottom corner)
-═══════════════════════════════════════════════ -->
-<div id="float-cta" aria-label="WhatsApp Order">
-  <!-- PLACEHOLDER: Replace [WHATSAPP NUMBER] with real phone number (e.g. 201XXXXXXXXX) -->
-  <a href="https://wa.me/[WHATSAPP NUMBER]" target="_blank" rel="noopener" class="wa-btn" aria-label="WhatsApp" data-i18n-aria="floatWaLabel">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        <!-- Wavy top: cream bleeds down from brew section bg into the dark band -->
+        <svg class="onz-brew__band-wave-top" viewBox="0 0 1200 72"
+          preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M0,72 L0,28 C120,52 240,8 360,32 C480,56 600,12 720,36
+                   C840,60 960,16 1080,40 C1140,52 1170,36 1200,30 L1200,72Z"
+            fill="#FFF6E9"/>
+        </svg>
+
+        <!-- Photo -->
+        <img
+          class="onz-brew__photo-cup"
+          src="assets/img/cup.png"
+          alt=""
+          role="presentation"
+          width="800"
+          height="1000"
+          loading="lazy"
+          decoding="async"
+        />
+
+        <!-- Wavy bottom: cream rises from below into the dark band -->
+        <svg class="onz-brew__band-wave-bot" viewBox="0 0 1200 72"
+          preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M0,0 L0,42 C120,20 240,62 360,38 C480,14 600,58 720,34
+                   C840,10 960,54 1080,30 C1140,18 1170,44 1200,40 L1200,0Z"
+            fill="#FFF6E9"/>
+        </svg>
+
+      </div><!-- /photo-band -->
+
+      <!-- ── Text & button ──────────────────────────────────────── -->
+      <div class="container">
+        <div class="onz-prose onz-reveal-group">
+          <h2 class="onz-brew__title" id="brew-title" data-i18n="brewTitle">القهوة</h2>
+          <p  class="onz-brew__body"  data-i18n="brewBody">قهوة طازجة على مزاجك.</p>
+          <a
+            class="onz-btn onz-btn--dark"
+            href="assets/menu/menu-ar.pdf"
+            data-menu-pdf
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="افتح قائمة المشروبات"
+            data-i18n-attr="aria-label:brewBtnAria"
+          >
+            <span data-i18n="brewBtn">شوف المنيو</span>
+            <svg class="onz-btn__arrow" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </section><!-- /brew -->
+
+         4. BITES — Teal block, wavy top edge rises from cream
+    ──────────────────────────────────────────────────────────── -->
+    <section id="bites" class="onz-bites" aria-labelledby="bites-title">
+
+      <!-- Wavy top edge — teal shape bites up into cream brew -->
+      <svg
+        class="onz-bites__wave-top"
+        viewBox="0 0 1200 80"
+        preserveAspectRatio="none"
+        aria-hidden="true" focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 80 C100 20,200 60,300 40 C400 20,500 60,600 40
+             C700 20,800 60,900 40 C1000 20,1100 60,1200 40 L1200 80 Z"
+          fill="#2CBFA6"
+        />
+      </svg>
+
+      <!-- Corner squiggle deco (inline-start / top) -->
+      <svg
+        class="onz-squiggle-deco onz-squiggle-deco--tl"
+        width="140" height="140"
+        viewBox="0 0 160 160"
+        aria-hidden="true" focusable="false"
+        color="#3A1E17"
+      >
+        <path d="M20 140 C20 80,80 20,120 50 C150 70,145 120,100 130 C65 138,45 110,60 85 C75 60,110 62,115 85"
+          fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M30 100 C35 90,50 88,55 96 C60 104,50 114,42 110 C36 107,35 100,40 96"
+          fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Sleepy eye doodle -->
+        <ellipse cx="85" cy="48" rx="14" ry="8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="85" cy="50" rx="5" ry="5" fill="currentColor" opacity="0.5"/>
+        <line x1="78" y1="41" x2="76" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="85" y1="40" x2="85" y2="34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="92" y1="41" x2="94" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+
+      <div class="container">
+        <div class="onz-prose onz-reveal-group">
+          <h2 class="onz-bites__title" id="bites-title" data-i18n="bitesTitle">الأكل</h2>
+          <p  class="onz-bites__body"  data-i18n="bitesBody">حاجة حلوة تكمّل بيها القهوة.</p>
+          <a
+            class="onz-btn onz-btn--dark"
+            href="assets/menu/menu-ar.pdf"
+            data-menu-pdf
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="افتح قائمة الأكل"
+            data-i18n-attr="aria-label:bitesBtnAria"
+          >
+            <span data-i18n="bitesBtn">شوف المنيو</span>
+            <svg class="onz-btn__arrow" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </section><!-- /bites -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         5. WAVE STRIP 2 — Between bites (teal) and vibes (espresso)
+    ──────────────────────────────────────────────────────────── -->
+    <div class="onz-squiggle-strip" role="separator" aria-hidden="true">
+      <svg
+        class="onz-squiggle-strip__svg"
+        viewBox="0 0 1200 72"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path class="onz-squiggle-path"
+          d="M0 24 C60 10,130 38,200 24 C270 10,340 38,400 24 C470 10,540 38,600 24
+             C670 10,740 38,800 24 C870 10,940 38,1000 24 C1070 10,1140 38,1200 24"
+          stroke="#2CBFA6" stroke-width="2" stroke-linecap="round" fill="none"
+        />
+        <path class="onz-squiggle-path"
+          d="M0 48 C60 34,130 62,200 48 C270 34,340 62,400 48 C470 34,540 62,600 48
+             C670 34,740 62,800 48 C870 34,940 62,1000 48 C1070 34,1140 62,1200 48"
+          stroke="#C9A579" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"
+        />
+      </svg>
+    </div><!-- /wave strip 2 -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         6. VIBES — Espresso block + full-bleed storefront photo.
+         The photo has a wavy top edge interlocking with the block.
+    ──────────────────────────────────────────────────────────── -->
+    <section id="vibes" class="onz-vibes" aria-labelledby="vibes-title">
+
+      <!-- Wavy top edge — espresso bites into cream squiggle strip -->
+      <svg
+        class="onz-vibes__wave-top"
+        viewBox="0 0 1200 80"
+        preserveAspectRatio="none"
+        aria-hidden="true" focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 80 C150 10,300 70,450 40 C600 10,750 70,900 40
+             C1050 10,1150 60,1200 40 L1200 80 Z"
+          fill="#3A1E17"
+        />
+      </svg>
+
+      <!-- Centered text block -->
+      <div class="container">
+        <div class="onz-vibes__text onz-prose onz-reveal-group">
+          <h2 class="onz-vibes__title" id="vibes-title" data-i18n="vibesTitle">الأجواء</h2>
+          <p  class="onz-vibes__body"  data-i18n="vibesBody">اقعد ريّح، أو خدها وامشي.</p>
+        </div>
+      </div>
+
+      <!-- Full-bleed storefront photo with wavy top mask -->
+      <div class="onz-vibes__img-wrap onz-reveal">
+        <!-- Wavy SVG mask: espresso color flows over the top of the photo -->
+        <svg
+          class="onz-vibes__img-wave"
+          viewBox="0 0 1200 60"
+          preserveAspectRatio="none"
+          aria-hidden="true" focusable="false"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0 C200 60,400 0,600 40 C800 80,1000 10,1200 50 L1200 0 Z"
+            fill="#3A1E17"
+          />
+        </svg>
+
+        <img
+          class="onz-vibes__storefront"
+          src="assets/img/storefront.png"
+          alt="واجهة متجر ONZGO"
+          data-i18n-attr="alt:vibesImgAlt"
+          width="1080"
+          height="1440"
+          loading="lazy"
+        />
+      </div>
+
+    </section><!-- /vibes -->
+
+
+    <!-- ─────────────────────────────────────────────────────────
+         7. VISIT US — Cream block, wavy top edge from espresso
+    ──────────────────────────────────────────────────────────── -->
+    <section id="visit" class="onz-visit" aria-labelledby="visit-title">
+
+      <!-- Wavy top edge — cream rises over espresso vibes image -->
+      <svg
+        class="onz-visit__wave-top"
+        viewBox="0 0 1200 80"
+        preserveAspectRatio="none"
+        aria-hidden="true" focusable="false"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 80 C200 15,400 65,600 35 C800 5,1000 55,1200 30 L1200 80 Z"
+          fill="#FFF6E9"
+        />
+      </svg>
+
+      <!-- Corner squiggle deco (inline-end / bottom) -->
+      <svg
+        class="onz-squiggle-deco onz-squiggle-deco--br"
+        width="160" height="160"
+        viewBox="0 0 160 160"
+        aria-hidden="true" focusable="false"
+        color="#F26B1D"
+      >
+        <path d="M140 20 C140 70,90 110,50 100 C20 92,15 60,40 48 C60 38,85 55,80 75"
+          fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 60 C14 54,22 66,28 60 C34 54,42 66,48 60"
+          fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="148" cy="140" r="4" fill="currentColor" opacity="0.4"/>
+      </svg>
+
+      <div class="container">
+        <div class="onz-prose onz-reveal-group">
+          <h2 class="onz-visit__title" id="visit-title" data-i18n="visitTitle">زورونا</h2>
+
+          <div class="onz-visit__info">
+
+            <!-- Address -->
+            <div class="onz-visit__info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span class="onz-placeholder" data-i18n="visitAddress">[ADDRESS]</span>
+            </div>
+
+            <!-- Hours -->
+            <div class="onz-visit__info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span class="onz-placeholder" data-i18n="visitHours">[OPENING HOURS]</span>
+            </div>
+
+            <!-- Phone -->
+            <div class="onz-visit__info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/>
+              </svg>
+              <span class="onz-placeholder" data-i18n="visitPhone">[PHONE]</span>
+            </div>
+
+          </div><!-- /info -->
+
+          <!-- Directions button -->
+          <a
+            class="onz-btn onz-btn--dark"
+            href="#"
+            data-maps-link
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="افتح الموقع على الخريطة"
+            data-i18n-attr="aria-label:visitBtnAria"
+          >
+            <span data-i18n="visitBtn">الاتجاهات</span>
+            <svg class="onz-btn__arrow" viewBox="0 0 20 20" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4"/>
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+    </section><!-- /visit -->
+
+  </main><!-- /main -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER — Espresso + orange accents, wavy top edge
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="onz-footer" aria-label="Site footer">
+
+    <!-- Wavy top edge — espresso wave rises over cream visit -->
+    <svg
+      class="onz-footer__wave-top"
+      viewBox="0 0 1200 80"
+      preserveAspectRatio="none"
+      aria-hidden="true" focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 80 C100 20,250 60,400 35 C550 10,700 60,850 30
+           C1000 0,1100 50,1200 35 L1200 80 Z"
+        fill="#3A1E17"
+      />
+    </svg>
+
+    <div class="container text-center">
+
+      <!-- Logo -->
+      <div class="onz-footer__logo onz-reveal">
+        <img
+          src="assets/svg/logo-light.svg"
+          alt="ONZGO"
+          width="160"
+          height="48"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- Orange divider bar -->
+      <div class="onz-footer__bar" aria-hidden="true"></div>
+
+      <!-- Quick nav links — populated/updated by i18n.js -->
+      <nav class="onz-footer__nav onz-reveal" id="footer-nav" aria-label="Footer navigation">
+        <a href="#brew"  class="onz-footer__link">القهوة</a>
+        <a href="#bites" class="onz-footer__link">الأكل</a>
+        <a href="#vibes" class="onz-footer__link">الأجواء</a>
+        <a href="#visit" class="onz-footer__link">زورونا</a>
+      </nav>
+
+      <!-- Social icons — hidden if URL is placeholder (via i18n.js) -->
+      <div class="onz-footer__socials onz-reveal" aria-label="Social media links">
+
+        <!-- Instagram -->
+        <span>
+          <a
+            href="#"
+            class="onz-footer__social-link"
+            data-social="instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <!-- Instagram SVG icon -->
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </span>
+
+        <!-- Facebook -->
+        <span>
+          <a
+            href="#"
+            class="onz-footer__social-link"
+            data-social="facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
+            <!-- Facebook SVG icon -->
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+        </span>
+
+      </div><!-- /socials -->
+
+      <!-- Copyright -->
+      <p class="onz-footer__copy onz-reveal" data-i18n="footerCopy">
+        © ONZGO. جميع الحقوق محفوظة.
+      </p>
+
+    </div>
+
+  </footer><!-- /footer -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FLOATING ACTION BUTTON — WhatsApp
+       Fixed bottom inline-end corner. Hidden until i18n.js
+       confirms CONFIG.whatsapp is filled.
+       ═══════════════════════════════════════════════════════════ -->
+  <a
+    class="onz-fab"
+    href="#"
+    aria-label="تواصل معنا على واتساب"
+    target="_blank"
+    rel="noopener noreferrer"
+    hidden
+  >
+    <!-- WhatsApp icon (inline SVG, no external dependency) -->
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
     </svg>
   </a>
-</div>
 
-<!-- ═══════════════════════════════════════════════
-     SCRIPT
-═══════════════════════════════════════════════ -->
-<script type="module" src="./script.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SCRIPTS
+       Load order matters:
+         content.js  → defines ONZGO.CONTENT & CONFIG
+         i18n.js     → reads content, applies default lang (AR)
+         animations.js → sets up observers
+         bootstrap.bundle.min.js → Offcanvas + Popper
+         main.js     → wires Bootstrap components + smooth scroll
+       ═══════════════════════════════════════════════════════════ -->
+  <script src="js/content.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/animations.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmHQHsdQQW0SvJqgPPmDXLtD8eq"
+    crossorigin="anonymous"
+  ></script>
+  <script src="js/main.js"></script>
+
 </body>
 </html>

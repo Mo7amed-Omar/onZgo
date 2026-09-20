@@ -1,0 +1,62 @@
+/* ============================================================
+   ONZGO — Design Tokens
+   Edit ONLY here to change colors, type scale, or spacing.
+   ============================================================ */
+
+:root {
+  /* ── Brand Palette ───────────────────────────────────────── */
+  --espresso: #3A1E17;
+  --orange:   #F26B1D;
+  --cream:    #FFF6E9;
+  --teal:     #2CBFA6;
+  --royal:    #1F3BB3;
+  --kraft:    #C9A579;
+
+  /* ── Derived / Utility ───────────────────────────────────── */
+  --espresso-90:  rgba(58, 30, 23, 0.90);
+  --espresso-60:  rgba(58, 30, 23, 0.60);
+  --orange-light: #F9913F;
+  --cream-dark:   #F5E8D0;
+  --teal-dark:    #1E9E8A;
+  --white:        #FFFFFF;
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-base:    'Cairo', 'Segoe UI', Arial, sans-serif;
+  --fw-black:     900;
+  --fw-bold:      800;
+  --fw-semi:      600;
+  --fw-regular:   400;
+
+  /* ── Type Scale (fluid) ──────────────────────────────────── */
+  --text-xs:   clamp(0.75rem,  1.5vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 2vw,   1rem);
+  --text-md:   clamp(1rem,     2.5vw, 1.25rem);
+  --text-lg:   clamp(1.25rem,  3vw,   1.75rem);
+  --text-xl:   clamp(1.75rem,  4vw,   2.5rem);
+  --text-2xl:  clamp(2.25rem,  6vw,   3.5rem);
+  --text-hero: clamp(2rem,     7vw,   4rem);
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  6rem;
+  --space-2xl: 9rem;
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:    cubic-bezier(0.64, 0, 0.78, 0);
+  --dur-fast:   180ms;
+  --dur-med:    400ms;
+  --dur-slow:   700ms;
+  --dur-draw:   1400ms;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --max-prose:  680px;
+  --max-wide:   1200px;
+  --header-h:   64px;
+  --wave-h:     80px;
+  --radius-pill: 999px;
+  --radius-md:   1rem;
+}
