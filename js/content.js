@@ -38,7 +38,6 @@ const CONTENT = {
 
     /* Header / Nav */
     navBrew:          'القهوة',
-    navBites:         'الأكل',
     navVibes:         'الأجواء',
     navVisit:         'زورونا',
     navMenu:          'شوف المنيو',
@@ -46,20 +45,14 @@ const CONTENT = {
     logoAlt:          'شعار ONZGO',
 
     /* Hero */
-    heroHeadline:     'قهوتك ماشية معاك.',
-    heroTagline:      'BREW • BITES • VIBES',
+    heroHeadline:     'قهوتك <span class="onz-highlight">ماشية معاك</span>.',
+    heroTagline:      'BREW • VIBES',
 
     /* Brew */
     brewTitle:        'القهوة',
     brewBody:         'قهوة طازجة على مزاجك.',
     brewBtn:          'شوف المنيو',
     brewBtnAria:      'افتح قائمة المشروبات',
-
-    /* Bites */
-    bitesTitle:       'الأكل',
-    bitesBody:        'حاجة حلوة تكمّل بيها القهوة.',
-    bitesBtn:         'شوف المنيو',
-    bitesBtnAria:     'افتح قائمة الأكل',
 
     /* Vibes */
     vibesTitle:       'الأجواء',
@@ -77,7 +70,6 @@ const CONTENT = {
     /* Footer */
     footerLinks: [
       { label: 'القهوة',   href: '#brew'  },
-      { label: 'الأكل',    href: '#bites' },
       { label: 'الأجواء',  href: '#vibes' },
       { label: 'زورونا',   href: '#visit' },
     ],
@@ -98,7 +90,6 @@ const CONTENT = {
 
     /* Header / Nav */
     navBrew:          'Brew',
-    navBites:         'Bites',
     navVibes:         'Vibes',
     navVisit:         'Visit Us',
     navMenu:          'View the menu',
@@ -106,20 +97,14 @@ const CONTENT = {
     logoAlt:          'ONZGO logo',
 
     /* Hero */
-    heroHeadline:     'Your coffee, on the go.',
-    heroTagline:      'BREW • BITES • VIBES',
+    heroHeadline:     'Your coffee, <span class="onz-highlight">on the go</span>.',
+    heroTagline:      'BREW • VIBES',
 
     /* Brew */
     brewTitle:        'Brew',
     brewBody:         'Fresh coffee, made your way.',
     brewBtn:          'View the menu',
     brewBtnAria:      'Open the drinks menu',
-
-    /* Bites */
-    bitesTitle:       'Bites',
-    bitesBody:        'Something tasty to go with it.',
-    bitesBtn:         'View the menu',
-    bitesBtnAria:     'Open the food menu',
 
     /* Vibes */
     vibesTitle:       'Vibes',
@@ -137,7 +122,6 @@ const CONTENT = {
     /* Footer */
     footerLinks: [
       { label: 'Brew',     href: '#brew'  },
-      { label: 'Bites',    href: '#bites' },
       { label: 'Vibes',    href: '#vibes' },
       { label: 'Visit Us', href: '#visit' },
     ],

@@ -2,7 +2,8 @@
  * ONZGO — Main
  * ──────────────────────────────────────────────────────────────
  * Orchestrates: Bootstrap Offcanvas, smooth-scroll, menu PDF
- * button wiring. Runs after DOM is ready.
+ * button wiring, hero curtain reveal, video playback & headline.
+ * Runs after DOM is ready.
  * ──────────────────────────────────────────────────────────────
  */
 
@@ -88,7 +89,7 @@
 
   /* ── 3. Menu PDF button wiring ───────────────────────────────
      All [data-menu-pdf] links are updated by i18n.js.
-     This just ensures they open in a new tab and don't
+     This ensures they open in a new tab and don't
      break if the PDF is missing.
   ──────────────────────────────────────────────────────────── */
   function initMenuButtons() {
@@ -114,28 +115,88 @@
     }
   }
 
-  /* ── 5. Hero video — play once, freeze on last frame ────────────
-     No autoplay attribute in HTML (avoids browser restrictions).
-     JS plays it only if prefers-reduced-motion is off.
-     On error or blocked autoplay: poster stays visible — no glitch.
+  /* ── 5. Hero Curtain Reveal, Video Playback & Badge ──────────
+     Sequence:
+      1. Page loads → poster is ready behind the curtain panels
+      2. ~200ms delay → curtain panels slide apart (800ms ease-out)
+      3. Exactly as curtains finish opening (~1000ms) → video.play() & badge drops in
+      4. Video ends (or 4.5s fallback) → headline reveals
   ──────────────────────────────────────────────────────────── */
-  function initHeroVideo() {
-    const video = document.getElementById('onz-hero-video');
-    if (!video) return;
+  function initHeroSequence() {
+    const video    = document.getElementById('onz-hero-video');
+    const curtain  = document.querySelector('.onz-hero-curtain');
+    const badge    = document.querySelector('.onz-hero__badge');
+    const headline = document.querySelector('.onz-hero__headline');
 
-    /* Respect reduced-motion: leave video paused (poster visible) */
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    /* Attempt autoplay — browsers may still block it (e.g. low-power) */
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(function () {
-        /* Autoplay blocked: poster remains visible — no action needed */
-      });
+    function revealHeadline() {
+      if (headline) {
+        headline.classList.add('is-revealed');
+      }
     }
 
-    /* No `loop` attribute → video stops naturally at the last frame.
-       Nothing to do on 'ended'. */
+    function revealBadge() {
+      if (badge) {
+        badge.classList.add('is-visible');
+      }
+    }
+
+    /* Fallback timer: ensure headline appears after 5.5s regardless */
+    const fallbackTimer = setTimeout(revealHeadline, 5500);
+
+    /* If prefers-reduced-motion is active */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      clearTimeout(fallbackTimer);
+      if (curtain) curtain.classList.add('is-open');
+      revealBadge();
+      revealHeadline();
+      return;
+    }
+
+    if (video) {
+      video.muted = true;
+
+      /* When video ends naturally, reveal headline */
+      video.addEventListener('ended', function () {
+        clearTimeout(fallbackTimer);
+        revealHeadline();
+      }, { once: true });
+
+      /* Handle video error fallback */
+      video.addEventListener('error', function () {
+        clearTimeout(fallbackTimer);
+        revealHeadline();
+      }, { once: true });
+    } else {
+      revealHeadline();
+    }
+
+    /* Start curtain opening after short delay (200ms) */
+    setTimeout(function () {
+      if (curtain) {
+        curtain.classList.add('is-open');
+      }
+
+      /* Exactly when curtain finishes opening (200ms + 800ms = 1000ms from load) */
+      setTimeout(function () {
+        revealBadge();
+
+        if (video) {
+          try {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(function () {
+                /* Autoplay blocked by browser policy — reveal headline gracefully */
+                clearTimeout(fallbackTimer);
+                revealHeadline();
+              });
+            }
+          } catch (_) {
+            clearTimeout(fallbackTimer);
+            revealHeadline();
+          }
+        }
+      }, 800);
+    }, 200);
   }
 
   /* ── Init ─────────────────────────────────────────────────── */
@@ -144,6 +205,6 @@
     initSmoothScroll();
     initMenuButtons();
     injectSvgSprite();
-    initHeroVideo();
+    initHeroSequence();
   });
 })();

@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ONZGO — قهوة طازجة، أكل لذيذ، أجواء حلوة. Fresh coffee, tasty bites, good vibes." />
+  <meta name="description" content="ONZGO — قهوة طازجة، أجواء حلوة. Fresh coffee, good vibes." />
   <meta name="theme-color" content="#3A1E17" />
 
   <!-- Preconnect for Google Fonts -->
@@ -39,7 +39,7 @@
 <body>
 
   <!-- ═══════════════════════════════════════════════════════════
-       FIXED HEADER
+       0. FIXED HEADER
        ═══════════════════════════════════════════════════════════ -->
   <header class="onz-header" role="banner">
 
@@ -65,7 +65,7 @@
       <a href="#" aria-label="ONZGO — الصفحة الرئيسية">
         <img
           src="assets/svg/logo-light.svg"
-          alt="ONZGO logo"
+          alt="ONZGO"
           width="160"
           height="48"
           loading="eager"
@@ -115,7 +115,6 @@
     <div class="offcanvas-body">
       <nav aria-label="Main navigation" id="offcanvas-label">
         <a href="#brew"  class="onz-nav-link" data-offcanvas-close data-i18n="navBrew">القهوة</a>
-        <a href="#bites" class="onz-nav-link" data-offcanvas-close data-i18n="navBites">الأكل</a>
         <a href="#vibes" class="onz-nav-link" data-offcanvas-close data-i18n="navVibes">الأجواء</a>
         <a href="#visit" class="onz-nav-link" data-offcanvas-close data-i18n="navVisit">زورونا</a>
         <!-- Menu PDF link -->
@@ -140,85 +139,88 @@
   <main>
 
     <!-- ─────────────────────────────────────────────────────────
-         1. HERO — 100svh, espresso gradient, cup.png dominant.
-         No button in the hero (Costa reference rule).
+         1. HERO — Costa-inspired pour video, curtain reveal, badge
     ──────────────────────────────────────────────────────────── -->
     <section id="hero" class="onz-hero" aria-label="Hero">
 
-      <!-- ── Hero video ───────────────────────────────────────────
-           Plays once (no loop). Freezes on last frame.
-           prefers-reduced-motion: autoplay is suppressed by JS;
-           poster stays visible.
-           Poster also shown while video loads / if autoplay blocks.
-      ──────────────────────────────────────────────────────────── -->
+      <!-- Video background wrap -->
       <div class="onz-hero-video-wrap">
         <video
           id="onz-hero-video"
           class="onz-hero-video"
+          autoplay
           muted
           playsinline
+          webkit-playsinline="true"
+          x5-playsinline="true"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
           preload="auto"
           poster="assets/video/hero-pour-poster.jpg"
           width="1280"
           height="720"
         >
-          <!--
-            Mobile-first source: portrait 4:5 (614×768).
-            Desktop source: landscape 16:9 (1280×720).
-            Browser picks the first <source> whose media matches.
-          -->
+          <!-- Mobile-first source: portrait 4:5 (614×768) -->
           <source
             media="(max-width: 767px)"
             src="assets/video/hero-pour-mobile.mp4"
             type="video/mp4"
-          >
+          />
+          <!-- Desktop source: landscape 16:9 (1280×720) -->
           <source
             src="assets/video/hero-pour.mp4"
             type="video/mp4"
-          >
+          />
         </video>
       </div>
 
-      <!-- Faint squiggle texture overlay (mimics storefront glass doodles) -->
+      <!-- Theater curtain reveal panels (open on load before video plays) -->
+      <div class="onz-hero-curtain" aria-hidden="true">
+        <div class="onz-hero-curtain__panel onz-hero-curtain__panel--left"></div>
+        <div class="onz-hero-curtain__panel onz-hero-curtain__panel--right"></div>
+      </div>
+
+      <!-- Contrast & legibility gradient overlays -->
+      <div class="onz-hero__overlay" aria-hidden="true"></div>
+
+      <!-- Brand badge: real ONZGO kraft cup photo with printed logo -->
+      <div class="onz-hero__badge" aria-hidden="true">
+        <img
+          class="onz-hero__badge-img"
+          src="assets/img/cup.png"
+          alt="ONZGO Cup"
+          width="88"
+          height="88"
+          loading="eager"
+        />
+      </div>
+
+      <!-- Wavy bottom edge (reveals cream background below) -->
       <svg
-        class="onz-hero__squiggles"
-        viewBox="0 0 400 800"
-        preserveAspectRatio="xMidYMid slice"
+        class="onz-hero__wave-bottom"
+        viewBox="0 0 1200 60"
+        preserveAspectRatio="none"
         aria-hidden="true"
         focusable="false"
       >
-        <path d="M20 100 C40 80, 80 120, 60 140 C40 160, 20 130, 40 110" fill="none" stroke="#FFF6E9" stroke-width="2" stroke-linecap="round"/>
-        <path d="M320 80 C340 60, 380 100, 360 120 C340 140, 310 110, 330 90" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M60 300 C80 280, 120 320, 100 340 C80 360, 50 330, 70 310" fill="none" stroke="#FFF6E9" stroke-width="2" stroke-linecap="round"/>
-        <path d="M280 320 C300 300, 340 340, 320 360 C300 380, 270 350, 290 330" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M150 480 C170 460, 210 500, 190 520 C170 540, 140 510, 160 490" fill="none" stroke="#FFF6E9" stroke-width="2" stroke-linecap="round"/>
-        <!-- Sleepy eye (from storefront art) -->
-        <ellipse cx="340" cy="250" rx="18" ry="10" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-        <ellipse cx="340" cy="252" rx="6" ry="6" fill="#FFF6E9" opacity="0.4"/>
-        <line x1="332" y1="241" x2="330" y2="234" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="340" y1="240" x2="340" y2="232" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="348" y1="241" x2="350" y2="234" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round"/>
-        <!-- Wave lines -->
-        <path d="M0 600 C20 590, 40 610, 60 600 C80 590, 100 610, 120 600 C140 590, 160 610, 180 600" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-        <path d="M220 650 C240 640, 260 660, 280 650 C300 640, 320 660, 340 650" fill="none" stroke="#FFF6E9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <path
+          d="M0,60 L0,20 C150,45 300,10 450,35 C600,60 750,15 900,40 C1050,65 1150,25 1200,30 L1200,60 Z"
+          fill="#FFF6E9"
+        />
       </svg>
 
-      <!-- Headline (bottom of hero, over gradient) -->
+      <!-- Headline (centered, single line, reveals after pour completes) -->
       <div class="onz-hero__text">
-        <h1 class="onz-hero__headline" data-i18n="heroHeadline">
-          قهوتك ماشية معاك.
+        <h1 class="onz-hero__headline" data-i18n-html="heroHeadline">
+          قهوتك <span class="onz-highlight">ماشية معاك</span>.
         </h1>
-        <p class="onz-hero__tagline" data-i18n="heroTagline">
-          BREW • BITES • VIBES
-        </p>
       </div>
 
     </section><!-- /hero -->
 
 
-
     <!-- ─────────────────────────────────────────────────────────
-         2. WAVE STRIP — Breathing pause / divider (cream bg)
+         2. SQUIGGLE STRIP — Breathing pause / wave divider on cream
     ──────────────────────────────────────────────────────────── -->
     <div class="onz-squiggle-strip" role="separator" aria-hidden="true">
       <svg
@@ -228,7 +230,6 @@
         aria-hidden="true"
         focusable="false"
       >
-        <!-- Three rows of hand-drawn squiggly waves -->
         <path class="onz-squiggle-path"
           d="M0 20 C50 8,110 32,160 20 C210 8,270 32,320 20 C370 8,430 32,480 20
              C530 8,590 32,640 20 C690 8,750 32,800 20 C850 8,910 32,960 20
@@ -249,15 +250,15 @@
           stroke="#F26B1D" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"
         />
       </svg>
-    </div><!-- /wave strip 1 -->
+    </div><!-- /squiggle-strip -->
 
 
     <!-- ─────────────────────────────────────────────────────────
-         3. BREW — Cream block
+         3. BREW — Cream block + cup photo band
     ──────────────────────────────────────────────────────────── -->
     <section id="brew" class="onz-brew" aria-labelledby="brew-title">
 
-      <!-- Corner squiggle deco (inline-end / top) -->
+      <!-- Corner squiggle deco (top-end) -->
       <svg
         class="onz-squiggle-deco onz-squiggle-deco--tr"
         width="160" height="160"
@@ -274,10 +275,10 @@
         <circle cx="138" cy="5"  r="2.5" fill="currentColor" opacity="0.3"/>
       </svg>
 
-      <!-- ── cup.png photo band (full-width, outside container) ─── -->
+      <!-- Full-width cup photo band -->
       <div class="onz-brew__photo-band onz-reveal">
 
-        <!-- Wavy top: cream bleeds down from brew section bg into the dark band -->
+        <!-- Wavy cream top edge -->
         <svg class="onz-brew__band-wave-top" viewBox="0 0 1200 72"
           preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <path d="M0,72 L0,28 C120,52 240,8 360,32 C480,56 600,12 720,36
@@ -285,7 +286,7 @@
             fill="#FFF6E9"/>
         </svg>
 
-        <!-- Photo -->
+        <!-- Cup Photo -->
         <img
           class="onz-brew__photo-cup"
           src="assets/img/cup.png"
@@ -297,7 +298,7 @@
           decoding="async"
         />
 
-        <!-- Wavy bottom: cream rises from below into the dark band -->
+        <!-- Wavy cream bottom edge -->
         <svg class="onz-brew__band-wave-bot" viewBox="0 0 1200 72"
           preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <path d="M0,0 L0,42 C120,20 240,62 360,38 C480,14 600,58 720,34
@@ -307,7 +308,7 @@
 
       </div><!-- /photo-band -->
 
-      <!-- ── Text & button ──────────────────────────────────────── -->
+      <!-- Content text & menu button -->
       <div class="container">
         <div class="onz-prose onz-reveal-group">
           <h2 class="onz-brew__title" id="brew-title" data-i18n="brewTitle">القهوة</h2>
@@ -333,110 +334,19 @@
 
     </section><!-- /brew -->
 
-         4. BITES — Teal block, wavy top edge rises from cream
-    ──────────────────────────────────────────────────────────── -->
-    <section id="bites" class="onz-bites" aria-labelledby="bites-title">
-
-      <!-- Wavy top edge — teal shape bites up into cream brew -->
-      <svg
-        class="onz-bites__wave-top"
-        viewBox="0 0 1200 80"
-        preserveAspectRatio="none"
-        aria-hidden="true" focusable="false"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 80 C100 20,200 60,300 40 C400 20,500 60,600 40
-             C700 20,800 60,900 40 C1000 20,1100 60,1200 40 L1200 80 Z"
-          fill="#2CBFA6"
-        />
-      </svg>
-
-      <!-- Corner squiggle deco (inline-start / top) -->
-      <svg
-        class="onz-squiggle-deco onz-squiggle-deco--tl"
-        width="140" height="140"
-        viewBox="0 0 160 160"
-        aria-hidden="true" focusable="false"
-        color="#3A1E17"
-      >
-        <path d="M20 140 C20 80,80 20,120 50 C150 70,145 120,100 130 C65 138,45 110,60 85 C75 60,110 62,115 85"
-          fill="none" stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M30 100 C35 90,50 88,55 96 C60 104,50 114,42 110 C36 107,35 100,40 96"
-          fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Sleepy eye doodle -->
-        <ellipse cx="85" cy="48" rx="14" ry="8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <ellipse cx="85" cy="50" rx="5" ry="5" fill="currentColor" opacity="0.5"/>
-        <line x1="78" y1="41" x2="76" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="85" y1="40" x2="85" y2="34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="92" y1="41" x2="94" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-
-      <div class="container">
-        <div class="onz-prose onz-reveal-group">
-          <h2 class="onz-bites__title" id="bites-title" data-i18n="bitesTitle">الأكل</h2>
-          <p  class="onz-bites__body"  data-i18n="bitesBody">حاجة حلوة تكمّل بيها القهوة.</p>
-          <a
-            class="onz-btn onz-btn--dark"
-            href="assets/menu/menu-ar.pdf"
-            data-menu-pdf
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="افتح قائمة الأكل"
-            data-i18n-attr="aria-label:bitesBtnAria"
-          >
-            <span data-i18n="bitesBtn">شوف المنيو</span>
-            <svg class="onz-btn__arrow" viewBox="0 0 20 20" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              aria-hidden="true">
-              <path d="M4 10h12M12 6l4 4-4 4"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-    </section><!-- /bites -->
-
 
     <!-- ─────────────────────────────────────────────────────────
-         5. WAVE STRIP 2 — Between bites (teal) and vibes (espresso)
-    ──────────────────────────────────────────────────────────── -->
-    <div class="onz-squiggle-strip" role="separator" aria-hidden="true">
-      <svg
-        class="onz-squiggle-strip__svg"
-        viewBox="0 0 1200 72"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path class="onz-squiggle-path"
-          d="M0 24 C60 10,130 38,200 24 C270 10,340 38,400 24 C470 10,540 38,600 24
-             C670 10,740 38,800 24 C870 10,940 38,1000 24 C1070 10,1140 38,1200 24"
-          stroke="#2CBFA6" stroke-width="2" stroke-linecap="round" fill="none"
-        />
-        <path class="onz-squiggle-path"
-          d="M0 48 C60 34,130 62,200 48 C270 34,340 62,400 48 C470 34,540 62,600 48
-             C670 34,740 62,800 48 C870 34,940 62,1000 48 C1070 34,1140 62,1200 48"
-          stroke="#C9A579" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"
-        />
-      </svg>
-    </div><!-- /wave strip 2 -->
-
-
-    <!-- ─────────────────────────────────────────────────────────
-         6. VIBES — Espresso block + full-bleed storefront photo.
-         The photo has a wavy top edge interlocking with the block.
+         4. VIBES — Espresso block + storefront photo
     ──────────────────────────────────────────────────────────── -->
     <section id="vibes" class="onz-vibes" aria-labelledby="vibes-title">
 
-      <!-- Wavy top edge — espresso bites into cream squiggle strip -->
+      <!-- Wavy top edge: espresso shape bites up into cream brew block -->
       <svg
         class="onz-vibes__wave-top"
         viewBox="0 0 1200 80"
         preserveAspectRatio="none"
-        aria-hidden="true" focusable="false"
+        aria-hidden="true"
+        focusable="false"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -456,12 +366,13 @@
 
       <!-- Full-bleed storefront photo with wavy top mask -->
       <div class="onz-vibes__img-wrap onz-reveal">
-        <!-- Wavy SVG mask: espresso color flows over the top of the photo -->
+        <!-- Wavy SVG mask: espresso color flows over top of photo -->
         <svg
           class="onz-vibes__img-wave"
           viewBox="0 0 1200 60"
           preserveAspectRatio="none"
-          aria-hidden="true" focusable="false"
+          aria-hidden="true"
+          focusable="false"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -485,16 +396,17 @@
 
 
     <!-- ─────────────────────────────────────────────────────────
-         7. VISIT US — Cream block, wavy top edge from espresso
+         5. VISIT US — Cream block, address/hours/phone & directions
     ──────────────────────────────────────────────────────────── -->
     <section id="visit" class="onz-visit" aria-labelledby="visit-title">
 
-      <!-- Wavy top edge — cream rises over espresso vibes image -->
+      <!-- Wavy top edge: cream rises over espresso vibes section -->
       <svg
         class="onz-visit__wave-top"
         viewBox="0 0 1200 80"
         preserveAspectRatio="none"
-        aria-hidden="true" focusable="false"
+        aria-hidden="true"
+        focusable="false"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -503,7 +415,7 @@
         />
       </svg>
 
-      <!-- Corner squiggle deco (inline-end / bottom) -->
+      <!-- Corner squiggle deco (bottom-end) -->
       <svg
         class="onz-squiggle-deco onz-squiggle-deco--br"
         width="160" height="160"
@@ -584,16 +496,17 @@
 
 
   <!-- ═══════════════════════════════════════════════════════════
-       FOOTER — Espresso + orange accents, wavy top edge
+       6. FOOTER — Espresso + orange accents, wavy top edge
        ═══════════════════════════════════════════════════════════ -->
   <footer class="onz-footer" aria-label="Site footer">
 
-    <!-- Wavy top edge — espresso wave rises over cream visit -->
+    <!-- Wavy top edge: espresso wave rises over cream visit section -->
     <svg
       class="onz-footer__wave-top"
       viewBox="0 0 1200 80"
       preserveAspectRatio="none"
-      aria-hidden="true" focusable="false"
+      aria-hidden="true"
+      focusable="false"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -622,7 +535,6 @@
       <!-- Quick nav links — populated/updated by i18n.js -->
       <nav class="onz-footer__nav onz-reveal" id="footer-nav" aria-label="Footer navigation">
         <a href="#brew"  class="onz-footer__link">القهوة</a>
-        <a href="#bites" class="onz-footer__link">الأكل</a>
         <a href="#vibes" class="onz-footer__link">الأجواء</a>
         <a href="#visit" class="onz-footer__link">زورونا</a>
       </nav>
@@ -640,7 +552,6 @@
             rel="noopener noreferrer"
             aria-label="Instagram"
           >
-            <!-- Instagram SVG icon -->
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
             </svg>
@@ -657,7 +568,6 @@
             rel="noopener noreferrer"
             aria-label="Facebook"
           >
-            <!-- Facebook SVG icon -->
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
@@ -677,9 +587,9 @@
 
 
   <!-- ═══════════════════════════════════════════════════════════
-       FLOATING ACTION BUTTON — WhatsApp
-       Fixed bottom inline-end corner. Hidden until i18n.js
-       confirms CONFIG.whatsapp is filled.
+       7. FLOATING ACTION BUTTON — WhatsApp
+       Fixed bottom-end corner. Hidden until i18n.js confirms
+       CONFIG.whatsapp is filled.
        ═══════════════════════════════════════════════════════════ -->
   <a
     class="onz-fab"
@@ -689,7 +599,7 @@
     rel="noopener noreferrer"
     hidden
   >
-    <!-- WhatsApp icon (inline SVG, no external dependency) -->
+    <!-- WhatsApp icon (inline SVG) -->
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
     </svg>
@@ -698,12 +608,12 @@
 
   <!-- ═══════════════════════════════════════════════════════════
        SCRIPTS
-       Load order matters:
+       Load order:
          content.js  → defines ONZGO.CONTENT & CONFIG
          i18n.js     → reads content, applies default lang (AR)
-         animations.js → sets up observers
+         animations.js → sets up reveal & draw observers
          bootstrap.bundle.min.js → Offcanvas + Popper
-         main.js     → wires Bootstrap components + smooth scroll
+         main.js     → wires offcanvas, smooth scroll, hero video & curtain
        ═══════════════════════════════════════════════════════════ -->
   <script src="js/content.js"></script>
   <script src="js/i18n.js"></script>

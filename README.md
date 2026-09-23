@@ -29,6 +29,16 @@ onzgo/
 └─ README.md
 ```
 
+## Structure & Page Flow
+1. **Header & Offcanvas:** Centered logo, hamburger navigation overlay, AR|EN toggle.
+2. **Hero:** Theater curtain reveal, pouring latte video with ambient glow, brand seal badge (`cup.png`), headline reveal on pour completion, wavy bottom transition.
+3. **Squiggle Strip:** Decorative wave lines on cream.
+4. **Brew:** Cup photo band (`cup.png`), fresh coffee copy, and menu PDF button.
+5. **Vibes:** Storefront photo (`storefront.png`) with wavy mask, good vibes copy.
+6. **Visit Us:** Opening hours, address, phone placeholders, and directions button.
+7. **Footer:** Quick nav links, social media icons, copyright notice.
+8. **Floating WhatsApp Button:** Direct chat link.
+
 ## Edit Text & Links
 Open `js/content.js` — all Arabic/English copy and CONFIG values live there only.
 
@@ -43,7 +53,7 @@ In `js/content.js`, replace these CONFIG values:
 - `phone` → display phone number
 
 ## Drop Assets Here
-- `assets/img/cup.png` — brew section photo band
+- `assets/img/cup.png` — hero brand badge + brew section photo band
 - `assets/img/storefront.png` — vibes section full-bleed photo
 - `assets/menu/menu-ar.pdf` — Arabic menu PDF
 - `assets/menu/menu-en.pdf` — English menu PDF
@@ -53,11 +63,11 @@ Replace `assets/svg/logo-light.svg` (cream, for dark backgrounds) and
 `assets/svg/logo-dark.svg` (espresso, for light backgrounds) with the official files.
 Keep the same filenames.
 
-## Hero Video
-The hero plays a real video once, then freezes on the last frame (latte art finished cup).
+## Hero Video & Curtain
+The hero features a theater curtain opening sequence followed by the pouring latte video:
 - Desktop (≥768px): `assets/video/hero-pour.mp4`
 - Mobile (≤767px): `assets/video/hero-pour-mobile.mp4`
 - Poster / reduced-motion: `assets/video/hero-pour-poster.jpg`
 
-With `prefers-reduced-motion`, the poster image is shown instead of the video.
+With `prefers-reduced-motion`, the curtain animation is skipped and the poster image is shown.
 Do **not** rename or move these files.

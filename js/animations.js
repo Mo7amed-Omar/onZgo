@@ -1,7 +1,7 @@
 /**
  * ONZGO — Animations
  * ──────────────────────────────────────────────────────────────
- * IntersectionObserver reveal + squiggle stroke-draw + hero parallax.
+ * IntersectionObserver reveal + squiggle stroke-draw + header scroll.
  * All animations are disabled when prefers-reduced-motion is set.
  * Uses transform/opacity only for 60fps performance.
  * ──────────────────────────────────────────────────────────────
@@ -89,39 +89,8 @@
     });
   }
 
-  /* ── 3. Hero Parallax ─────────────────────────────────────────
-     Moves the hero <img> up to 20px on scroll.
-     requestAnimationFrame-gated for performance.
-  ──────────────────────────────────────────────────────────── */
-  function initHeroParallax() {
-    if (prefersReduced) return;
-
-    const heroImg = document.querySelector('.onz-hero__img');
-    if (!heroImg) return;
-
-    let ticking = false;
-
-    function onScroll() {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-          /* Only apply within hero height */
-          const heroH   = document.querySelector('.onz-hero')?.offsetHeight || window.innerHeight;
-          if (scrollY <= heroH) {
-            const offset = Math.round(scrollY * 0.18); /* max ~20px at hero bottom */
-            heroImg.style.transform = `translateY(${offset}px)`;
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
-
-  /* ── 4. Header Solid-on-scroll ────────────────────────────────
-     Adds .onz-header--solid once the user scrolls past ~80px.
+  /* ── 3. Header Solid-on-scroll ────────────────────────────────
+     Adds .onz-header--solid once the user scrolls past ~60px.
   ──────────────────────────────────────────────────────────── */
   function initHeaderScroll() {
     const header = document.querySelector('.onz-header');
@@ -130,7 +99,7 @@
     let ticking = false;
 
     function update() {
-      header.classList.toggle('onz-header--solid', window.scrollY > 80);
+      header.classList.toggle('onz-header--solid', window.scrollY > 60);
       ticking = false;
     }
 
@@ -142,53 +111,11 @@
     }, { passive: true });
   }
 
-  /* ── 5. Latte Art Entrance ────────────────────────────────────
-     Triggers the IS-latte-visible class on [data-latte-trigger]
-     when the brew section enters the viewport.
-     Also computes getTotalLength() for the stream paths.
-  ──────────────────────────────────────────────────────────── */
-  function initLatteArt() {
-    const wrap = document.querySelector('[data-latte-trigger]');
-    if (!wrap) return;
-
-    if (prefersReduced) {
-      /* Reveal everything immediately without animation */
-      wrap.classList.add('is-latte-visible');
-      return;
-    }
-
-    /* Compute actual stream path lengths for pixel-perfect draw animation */
-    const streamPaths = wrap.querySelectorAll('.onz-stream-main, .onz-stream-shine');
-    streamPaths.forEach(path => {
-      try {
-        const len = path.getTotalLength ? Math.ceil(path.getTotalLength()) : 280;
-        path.style.strokeDasharray  = len;
-        path.style.strokeDashoffset = len;
-      } catch (_) { /* SVG not in layout yet — CSS fallback (280) applies */ }
-    });
-
-    const latteObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-latte-visible');
-            latteObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-
-    latteObserver.observe(wrap);
-  }
-
   /* ── Init ─────────────────────────────────────────────────── */
   function init() {
     initReveal();
     initSquiggleDraw();
-    initHeroParallax();
     initHeaderScroll();
-    initLatteArt();
   }
 
   /* Expose */

@@ -2,7 +2,8 @@
  * ONZGO — i18n / Language Switch
  * ──────────────────────────────────────────────────────────────
  * Handles: lang attribute, dir attribute, Bootstrap CSS swap,
- *          data-i18n text replacement, data-i18n-href link update,
+ *          data-i18n text replacement, data-i18n-html replacement,
+ *          data-i18n-attr attribute updates,
  *          localStorage persistence, default = AR.
  * ──────────────────────────────────────────────────────────────
  */
@@ -51,11 +52,22 @@
       if (bsLink.href !== target) bsLink.href = target;
     }
 
-    /* 4. data-i18n text nodes */
+    /* 4. data-i18n text / html nodes */
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (t[key] !== undefined) {
-        el.textContent = t[key];
+        if (typeof t[key] === 'string' && t[key].includes('<')) {
+          el.innerHTML = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (t[key] !== undefined) {
+        el.innerHTML = t[key];
       }
     });
 
