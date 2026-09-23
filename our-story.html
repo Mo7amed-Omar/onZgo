@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ONZGO — قصتنا، كيف بدأ الشغف بفنجان قهوة استثنائي وأجواء لا تُنسى." />
+  <meta name="theme-color" content="#3A1E17" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    id="bs-css"
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+  />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+
+  <title>قصتنا — ONZGO</title>
+</head>
+<body class="onz-page-sub">
+
+  <!-- HEADER -->
+  <header class="onz-header onz-header--solid" role="banner">
+    <div class="onz-header__inner">
+      <!-- Mobile Hamburger (Visible < 992px) -->
+      <div class="onz-header__hamburger">
+        <button
+          id="hamburger-btn"
+          class="onz-hamburger"
+          type="button"
+          aria-controls="onz-offcanvas"
+          aria-expanded="false"
+          aria-label="فتح القائمة"
+        >
+          <span class="onz-hamburger__bar"></span>
+          <span class="onz-hamburger__bar"></span>
+          <span class="onz-hamburger__bar"></span>
+          <span class="onz-sr-only">Menu</span>
+        </button>
+      </div>
+
+      <!-- Brand Logo -->
+      <div class="onz-header__logo">
+        <a href="index.html" aria-label="ONZGO — الصفحة الرئيسية">
+          <img
+            src="assets/svg/logo-light.svg"
+            alt="ONZGO"
+            width="150"
+            height="44"
+            loading="eager"
+          />
+        </a>
+      </div>
+
+      <!-- Desktop Navigation Menu (Visible >= 992px) -->
+      <nav class="onz-header__nav" aria-label="التنقل الرئيسي">
+        <a href="our-coffee.html" class="onz-header__nav-link">قهوتنا</a>
+        <a href="our-story.html" class="onz-header__nav-link is-active">قصتنا</a>
+        <a href="assets/menu/menu-ar.pdf" class="onz-header__nav-link onz-header__nav-link--badge" target="_blank" rel="noopener noreferrer">شوف المنيو</a>
+        <a href="index.html#visit" class="onz-header__nav-link">فروعنا</a>
+        <a href="index.html#visit" class="onz-header__nav-link">تواصل معنا</a>
+      </nav>
+
+      <!-- Language / Action Toggle -->
+      <div class="onz-header__lang">
+        <a href="index.html" class="onz-lang-toggle" aria-label="الرئيسية">الرئيسية</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- OFFCANVAS OVERLAY -->
+  <div id="onz-offcanvas" class="onz-offcanvas" tabindex="-1">
+    <div class="offcanvas-header justify-content-end">
+      <button type="button" class="btn-close onz-close-btn" data-bs-dismiss="offcanvas" aria-label="إغلاق"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav aria-label="Main navigation">
+        <a href="index.html" class="onz-nav-link">الرئيسية</a>
+        <a href="our-coffee.html" class="onz-nav-link">قهوتنا</a>
+        <a href="our-story.html" class="onz-nav-link onz-nav-link--active">قصتنا</a>
+        <a href="assets/menu/menu-ar.pdf" target="_blank" rel="noopener noreferrer" class="onz-nav-link onz-nav-link--menu">شوف المنيو</a>
+        <a href="index.html#visit" class="onz-nav-link">زورونا</a>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════════════════
+         1. HERO WITH STOREFRONT PHOTO
+         ═══════════════════════════════════════════════════════════ -->
+    <section class="onz-story-hero" aria-label="Hero قصتنا">
+      <div class="onz-story-hero__media">
+        <img
+          src="assets/img/storefront.png"
+          alt="فرع ONZGO"
+          width="1200"
+          height="800"
+          loading="eager"
+        />
+        <div class="onz-story-hero__overlay"></div>
+      </div>
+
+      <div class="container onz-story-hero__content">
+        <span class="onz-badge-pill">OUR JOURNEY</span>
+        <h1 class="onz-story-hero__title">قصتنا</h1>
+        <p class="onz-story-hero__subtitle">
+          مع حبنا للقهوة واهتمامنا بكل تفصيلة، قصة ONZGO فريدة بتشبه قهوتنا.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         2. EDITORIAL STORY SECTION
+         ═══════════════════════════════════════════════════════════ -->
+    <section class="onz-story-section">
+      <div class="container onz-story-container">
+
+        <!-- Narrative Card 1 -->
+        <div class="onz-narrative-block">
+          <div class="onz-narrative-text">
+            <span class="onz-tag-accent">البداية والشغف</span>
+            <h2 class="onz-narrative-title">قهوة اتعملت عشان تمشي معاك</h2>
+            <p class="onz-narrative-p">
+              بدأت حكاية <strong>ONZGO</strong> من ملاحظة بسيطة: اليوم بيجري سريع، والناس دايمًا مستعجلة، بس فنجان القهوة مش مجرد مشروب سريع.. هو اللحظة اللي بتظبط دماغك وبتديك طاقة تكمل.
+            </p>
+            <p class="onz-narrative-p">
+              قررنا نكسر المعادلة الصعبة: نقدم قهوة مختصة بمستوى عالمي وحبوب بن محمصة طازجة، وبأعلى سرعة ممكنة تليق بحركتك اليومية، بدون أي مساومة على الجودة والمذاق الأصيل.
+            </p>
+          </div>
+          <div class="onz-narrative-media">
+            <img
+              src="assets/img/cup.png"
+              alt="كوب قهوة ONZGO"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Philosophy Cards: Brew, Bites, Vibes -->
+        <div class="onz-philosophy-section">
+          <h2 class="onz-section-header__title text-center">فلسفتنا الثلاثية</h2>
+          <p class="onz-section-header__desc text-center">ثلاث كلمات تلخص تجربة ONZGO في كل زيارة</p>
+
+          <div class="onz-philosophy-grid">
+            <!-- Pillar 1: BREW -->
+            <div class="onz-philosophy-card">
+              <div class="onz-philosophy-icon">☕</div>
+              <h3 class="onz-philosophy-title">BREW — القهوة</h3>
+              <p class="onz-philosophy-desc">
+                بنختار حبوبنا بعناية من أفضل مزارع البن العالمية، ويتم تحميصها وإعدادها بأيدي باريستا محترفين يحبون الصنعة.
+              </p>
+            </div>
+
+            <!-- Pillar 2: BITES -->
+            <div class="onz-philosophy-card">
+              <div class="onz-philosophy-icon">🥐</div>
+              <h3 class="onz-philosophy-title">BITES — المخبوزات</h3>
+              <p class="onz-philosophy-desc">
+                سناكس ومخبوزات طازجة يومياً تكمل مذاق قهوتك المفضل وتمنحك التوازن المثالي في أي وقت من اليوم.
+              </p>
+            </div>
+
+            <!-- Pillar 3: VIBES -->
+            <div class="onz-philosophy-card">
+              <div class="onz-philosophy-icon">✨</div>
+              <h3 class="onz-philosophy-title">VIBES — الأجواء</h3>
+              <p class="onz-philosophy-desc">
+                طاقة مبهجة وألوان حيوية وموسيقى ترفع المزاج. مكانك المفضل سواء قررت تقعد تروق أو تاخد فنجانك وتمشي.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission Banner -->
+        <div class="onz-mission-banner">
+          <h3 class="onz-mission-banner__title">«قهوتك ماشية معاك، في كل خطوة وكل لحظة.»</h3>
+          <p class="onz-mission-banner__desc">سواء كنت في طريقك للشغل، مع أصحابك، أو محتاج استراحة رايقة في نص اليوم، ONZGO دايمًا جاهز ومستنيك.</p>
+          <div class="onz-mission-banner__actions">
+            <a href="our-coffee.html" class="onz-btn onz-btn--orange">
+              <span>استكشف قائمة مشروباتنا</span>
+              <svg class="onz-btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
+            </a>
+            <a href="index.html#visit" class="onz-btn onz-btn--dark">
+              <span>زورونا في أقرب فرع</span>
+              <svg class="onz-btn__arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12M12 6l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="onz-footer" aria-label="Site footer">
+    <div class="container text-center">
+      <div class="onz-footer__logo">
+        <a href="index.html">
+          <img src="assets/svg/logo-light.svg" alt="ONZGO" width="160" height="48" loading="lazy" />
+        </a>
+      </div>
+      <div class="onz-footer__bar" aria-hidden="true"></div>
+      <nav class="onz-footer__nav" aria-label="Footer navigation">
+        <a href="index.html" class="onz-footer__link">الرئيسية</a>
+        <a href="our-coffee.html" class="onz-footer__link">قهوتنا</a>
+        <a href="our-story.html" class="onz-footer__link">قصتنا</a>
+        <a href="index.html#visit" class="onz-footer__link">زورونا</a>
+      </nav>
+      <p class="onz-footer__copy">© ONZGO. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp FAB -->
+  <a class="onz-fab" href="https://wa.me/201000000000" aria-label="تواصل معنا على واتساب" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

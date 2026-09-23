@@ -162,9 +162,77 @@
       }
     };
 
+    /* Subpage video support */
+    const subVideo = document.getElementById('onz-sub-video');
+    if (subVideo) {
+      subVideo.muted = true;
+      subVideo.playsInline = true;
+      const sp = subVideo.play();
+      if (sp !== undefined) sp.catch(() => {});
+    }
+
     tryPlay();
     document.addEventListener('touchstart', tryPlay, { once: true });
     document.addEventListener('click', tryPlay, { once: true });
+  }
+
+  /* ── 6. Vertical Theater Curtain Video Stage ──────────────── */
+  function initVerticalTheater() {
+    const theater = document.getElementById('onz-theater');
+    const video   = document.getElementById('onz-theater-video');
+    const replay  = document.getElementById('onz-theater-replay');
+    if (!theater || !video) return;
+
+    let hasOpened = false;
+
+    function openCurtainsAndPlay() {
+      theater.classList.remove('has-ended');
+      theater.classList.add('is-open');
+      hasOpened = true;
+
+      if (window.innerWidth <= 767 && !video.currentSrc.includes('mobile')) {
+        const mobileSrc = 'assets/video/hero-pour-mobile.mp4';
+        if (video.src !== mobileSrc) {
+          video.src = mobileSrc;
+          video.load();
+        }
+      }
+
+      video.currentTime = 0;
+      const p = video.play();
+      if (p !== undefined) {
+        p.catch(() => {});
+      }
+    }
+
+    function closeCurtains() {
+      theater.classList.remove('is-open');
+      theater.classList.add('has-ended');
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasOpened) {
+            setTimeout(openCurtainsAndPlay, 300);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      observer.observe(theater);
+    } else {
+      setTimeout(openCurtainsAndPlay, 1000);
+    }
+
+    video.addEventListener('ended', closeCurtains);
+
+    if (replay) {
+      replay.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openCurtainsAndPlay();
+      });
+    }
   }
 
   /* ── Init ─────────────────────────────────────────────────── */
@@ -174,5 +242,6 @@
     initMenuButtons();
     injectSvgSprite();
     initHeroSequence();
+    initVerticalTheater();
   });
 })();

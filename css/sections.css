@@ -8,50 +8,31 @@
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .onz-hero {
   position: relative;
-  /* Mobile: 72svh so user sees hero + wavy strip + top of brew block */
-  height: 72svh;
-  min-height: 520px;
-  max-height: 680px;
+  /* Mobile: 75svh so user sees hero cup + headline + top of next section */
+  height: 75svh;
+  min-height: 540px;
+  max-height: 720px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* headline anchored toward bottom */
+  justify-content: flex-end; /* headline anchored toward bottom on mobile */
   overflow: hidden;
-  /* Base background sampled from video background to eliminate seams */
   background-color: #1A0D09;
-  background-image: radial-gradient(
-    ellipse at 50% 32%,
-    #4E2416 0%,
-    #2B120B 45%,
-    #1A0D09 82%,
-    #120805 100%
-  );
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .onz-hero {
-    height: 88svh;
-    max-height: none;
-    min-height: 620px;
+    height: 90svh;
+    max-height: 840px;
+    min-height: 640px;
+    flex-direction: row;
+    align-items: center;
+    padding-inline: 0;
   }
 }
 
-/* Warm ambient glow behind the cup */
-.onz-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 42%,
-    rgba(242, 107, 29, 0.14) 0%,
-    rgba(242, 107, 29, 0.05) 42%,
-    transparent 72%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Video container */
+/* Background Media (Branded Cup & Pour Stream) */
+.onz-hero-media-wrap,
 .onz-hero-video-wrap {
   position: absolute;
   inset: 0;
@@ -60,18 +41,19 @@
   z-index: 0;
 }
 
-/* <video> element */
+.onz-hero-img,
 .onz-hero-video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 46% 30%; /* Cup + stream fully visible on mobile */
+  object-position: 72% 30%; /* Cup with ONZGO & stream centered on mobile */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
+  .onz-hero-img,
   .onz-hero-video {
-    object-position: center 35%;
+    object-position: 84% center; /* Cup positioned at the right on desktop */
   }
 }
 
@@ -133,42 +115,26 @@
   pointer-events: none;
   background:
     /* Top gradient for logo readability */
-    linear-gradient(to bottom, rgba(26, 13, 9, 0.75) 0%, rgba(26, 13, 9, 0.25) 18%, transparent 32%),
-    /* Bottom gradient for headline readability and wave blend */
-    linear-gradient(to top, #1A0D09 0%, rgba(26, 13, 9, 0.85) 24%, transparent 52%);
+    linear-gradient(to bottom, rgba(26, 13, 9, 0.8) 0%, rgba(26, 13, 9, 0.25) 18%, transparent 35%),
+    /* Bottom gradient for headline readability on mobile */
+    linear-gradient(to top, #1A0D09 0%, rgba(26, 13, 9, 0.88) 28%, transparent 58%);
 }
 
-/* ── Brand Badge (real photo crop of kraft cup with printed logo) ── */
-.onz-hero__badge {
-  position: absolute;
-  inset-block-start: clamp(68px, 10svh, 84px);
-  inset-inline-end: clamp(16px, 4vw, 32px);
-  z-index: 5;
-  width: clamp(68px, 18vw, 84px);
-  height: clamp(68px, 18vw, 84px);
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(255, 246, 233, 0.45);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.2);
-  background: #C9A579;
-  /* Entrance animation: fades and drops in after curtain opens */
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
-  pointer-events: none;
-}
+@media (min-width: 900px) {
+  /* On desktop: darken the side where the text sits, keep cup crisp */
+  [dir="rtl"] .onz-hero__overlay {
+    background:
+      linear-gradient(to bottom, rgba(26, 13, 9, 0.85) 0%, transparent 22%),
+      linear-gradient(to right, rgba(26, 13, 9, 0.95) 0%, rgba(26, 13, 9, 0.8) 40%, rgba(26, 13, 9, 0.2) 65%, transparent 85%),
+      linear-gradient(to top, #1A0D09 0%, transparent 18%);
+  }
 
-.onz-hero__badge.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.onz-hero__badge-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 25%; /* focus on printed ONZGO logo on cup */
-  display: block;
+  [dir="ltr"] .onz-hero__overlay {
+    background:
+      linear-gradient(to bottom, rgba(26, 13, 9, 0.85) 0%, transparent 22%),
+      linear-gradient(to left, rgba(26, 13, 9, 0.95) 0%, rgba(26, 13, 9, 0.8) 40%, rgba(26, 13, 9, 0.2) 65%, transparent 85%),
+      linear-gradient(to top, #1A0D09 0%, transparent 18%);
+  }
 }
 
 /* Wavy bottom edge of hero (reveals cream background below) */
@@ -184,28 +150,62 @@
   font-size: 0;
 }
 
+/* Hero container */
+.onz-hero__container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+}
+
+@media (max-width: 899px) {
+  .onz-hero__container {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 900px) {
+  [dir="rtl"] .onz-hero__container {
+    justify-content: flex-end; /* In RTL flex-end positions on the LEFT */
+  }
+
+  [dir="ltr"] .onz-hero__container {
+    justify-content: flex-start;
+  }
+}
+
 /* Headline text container */
 .onz-hero__text {
   position: relative;
   z-index: 5;
   text-align: center;
-  padding-inline: clamp(12px, 3.5vw, 24px);
-  padding-block-end: clamp(32px, 6svh, 48px);
+  padding-inline: clamp(16px, 4vw, 24px);
+  padding-block-end: clamp(28px, 5svh, 44px);
   width: 100%;
-  max-width: 100%;
+  max-width: 580px;
   box-sizing: border-box;
+}
+
+.onz-hero__badge-text {
+  display: inline-block;
+  background: rgba(242, 107, 29, 0.18);
+  border: 1px solid rgba(242, 107, 29, 0.45);
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-block-end: 14px;
 }
 
 .onz-hero__headline {
   color: var(--cream);
-  font-size: clamp(20px, 5.8vw, 36px);
-  font-weight: var(--fw-semi); /* Cairo 600 */
-  line-height: 1.25;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.75);
+  font-size: clamp(24px, 5.2vw, 48px);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85);
   margin: 0;
-  opacity: 1;
-  transform: translateY(0);
-  max-width: 100%;
   word-break: break-word;
   overflow-wrap: break-word;
 }
@@ -216,9 +216,54 @@
   font-weight: var(--fw-bold);
 }
 
-@media (min-width: 768px) {
+.onz-hero__subline {
+  color: rgba(255, 246, 233, 0.9);
+  font-size: clamp(14px, 2vw, 18px);
+  margin-block: 14px 24px;
+  max-width: 540px;
+  margin-inline: auto;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+  line-height: 1.65;
+}
+
+.onz-hero__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .onz-hero__text {
+    width: auto;
+    max-width: 580px;
+    text-align: right;
+    padding: 0;
+  }
+
+  [dir="ltr"] .onz-hero__text {
+    text-align: left;
+  }
+
   .onz-hero__headline {
-    font-size: clamp(34px, 4.5vw, 48px);
+    font-size: clamp(34px, 4.2vw, 50px);
+    text-align: right;
+  }
+
+  [dir="ltr"] .onz-hero__headline {
+    text-align: left;
+  }
+
+  .onz-hero__subline {
+    margin-inline: 0;
+    text-align: right;
+  }
+
+  [dir="ltr"] .onz-hero__subline {
+    text-align: left;
+  }
+
+  .onz-hero__actions {
+    justify-content: flex-start;
   }
 }
 
@@ -589,4 +634,691 @@
   .onz-visit__info-item {
     justify-content: flex-start;
   }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   7. COSTA-STYLE SEAMLESS SPLIT CARDS (قهوتنا & قصتنا)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-section-seamless {
+  padding-block: clamp(52px, 8vw, 92px);
+  position: relative;
+  background-color: #FAF6F0;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='20' viewBox='0 0 80 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q20 0 40 10 T80 10' fill='none' stroke='%23CBB8A3' stroke-width='1' stroke-opacity='0.4'/%3E%3C/svg%3E");
+  background-size: 80px 20px;
+}
+
+.onz-split-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(58, 30, 23, 0.08), 0 2px 8px rgba(58, 30, 23, 0.04);
+  transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+
+.onz-split-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 48px rgba(58, 30, 23, 0.12), 0 4px 12px rgba(58, 30, 23, 0.06);
+}
+
+@media (min-width: 900px) {
+  .onz-split-card {
+    grid-template-columns: 1.1fr 1fr;
+    min-height: 440px;
+  }
+  .onz-split-card--reversed {
+    grid-template-columns: 1fr 1.1fr;
+  }
+}
+
+/* Content side */
+.onz-split-card__content {
+  padding: clamp(32px, 6vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: start;
+}
+
+[dir="rtl"] .onz-split-card__content {
+  text-align: right;
+  align-items: flex-start;
+}
+
+.onz-split-card--teal .onz-split-card__content {
+  background-color: #E2F2EE;
+  color: var(--espresso);
+}
+
+.onz-split-card--espresso .onz-split-card__content {
+  background-color: var(--espresso);
+  color: var(--cream);
+}
+
+.onz-split-card__badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.05em;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  margin-block-end: var(--space-sm);
+}
+
+.onz-split-card--teal .onz-split-card__badge {
+  background: rgba(44, 191, 166, 0.18);
+  color: #1E8775;
+}
+
+.onz-split-card--espresso .onz-split-card__badge {
+  background: rgba(242, 107, 29, 0.2);
+  color: var(--orange);
+}
+
+.onz-split-card__title {
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: var(--fw-black);
+  line-height: 1.15;
+  margin-block-end: var(--space-sm);
+}
+
+.onz-split-card--teal .onz-split-card__title {
+  color: var(--espresso);
+}
+
+.onz-split-card--espresso .onz-split-card__title {
+  color: var(--cream);
+}
+
+.onz-split-card__text {
+  font-size: clamp(16px, 2.2vw, 19px);
+  line-height: 1.7;
+  margin-block-end: var(--space-lg);
+  max-width: 480px;
+}
+
+.onz-split-card--teal .onz-split-card__text {
+  color: #4A3028;
+}
+
+.onz-split-card--espresso .onz-split-card__text {
+  color: rgba(255, 246, 233, 0.85);
+}
+
+/* Media side */
+.onz-split-card__media {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background-color: var(--espresso);
+}
+
+.onz-split-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.onz-split-card__media-pattern {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(242, 107, 29, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   8. VERTICAL THEATER CURTAIN SHOWCASE (STAGE)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-theater-section {
+  background-color: #120805;
+  padding-block: clamp(40px, 6vw, 70px);
+  position: relative;
+  overflow: hidden;
+}
+
+.onz-theater-header {
+  margin-block-end: var(--space-lg);
+}
+
+.onz-theater-header__title {
+  color: var(--cream);
+  font-size: clamp(26px, 4.5vw, 38px);
+  font-weight: var(--fw-black);
+  margin-block-end: 8px;
+}
+
+.onz-theater-header__subtitle {
+  color: rgba(255, 246, 233, 0.75);
+  font-size: var(--text-md);
+}
+
+.onz-theater {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  height: clamp(420px, 70svh, 640px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 246, 233, 0.1);
+  background: #1A0D09;
+}
+
+.onz-theater__video-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.onz-theater__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+
+/* Vertical Theater Curtains */
+.onz-theater__curtain-top,
+.onz-theater__curtain-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 5;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.onz-theater__curtain-top {
+  top: 0;
+  background: linear-gradient(to bottom, #160B08 0%, #2E150F 85%, #4A2217 100%);
+  border-bottom: 3px solid rgba(242, 107, 29, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  transform: translateY(0);
+}
+
+.onz-theater__curtain-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, #160B08 0%, #2E150F 85%, #4A2217 100%);
+  border-top: 3px solid rgba(242, 107, 29, 0.6);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
+  transform: translateY(0);
+}
+
+/* Open State (Top moves up, Bottom moves down) */
+.onz-theater.is-open .onz-theater__curtain-top {
+  transform: translateY(-100%);
+}
+
+.onz-theater.is-open .onz-theater__curtain-bottom {
+  transform: translateY(100%);
+}
+
+/* Replay / Stage badge when closed */
+.onz-theater__replay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms var(--ease-out);
+}
+
+.onz-theater.has-ended .onz-theater__replay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.onz-theater__replay-btn {
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  padding: 12px 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-base);
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(242, 107, 29, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform var(--dur-fast), background var(--dur-fast);
+}
+
+.onz-theater__replay-btn:hover {
+  background: var(--orange-light);
+  transform: scale(1.05);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   9. SUBPAGE STYLES (our-coffee.html & our-story.html)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.onz-page-sub {
+  background-color: var(--cream);
+}
+
+/* Subpage Hero */
+.onz-page-hero,
+.onz-story-hero {
+  position: relative;
+  height: clamp(380px, 55svh, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #1A0D09;
+  text-align: center;
+}
+
+.onz-page-hero__media,
+.onz-story-hero__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.onz-page-hero__media video,
+.onz-story-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.onz-page-hero__overlay,
+.onz-story-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 13, 9, 0.95) 0%, rgba(26, 13, 9, 0.6) 50%, rgba(26, 13, 9, 0.8) 100%);
+}
+
+.onz-page-hero__content,
+.onz-story-hero__content {
+  position: relative;
+  z-index: 3;
+  padding-inline: var(--space-md);
+  max-width: 800px;
+}
+
+.onz-badge-pill {
+  display: inline-block;
+  background: rgba(242, 107, 29, 0.25);
+  border: 1px solid var(--orange);
+  color: var(--orange-light);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.1em;
+  padding: 4px 16px;
+  border-radius: var(--radius-pill);
+  margin-block-end: var(--space-sm);
+}
+
+.onz-page-hero__title,
+.onz-story-hero__title {
+  color: var(--cream);
+  font-size: clamp(34px, 6.5vw, 54px);
+  font-weight: var(--fw-black);
+  margin-block-end: var(--space-xs);
+}
+
+.onz-page-hero__subtitle,
+.onz-story-hero__subtitle {
+  color: rgba(255, 246, 233, 0.9);
+  font-size: clamp(16px, 2.5vw, 20px);
+  line-height: 1.6;
+}
+
+/* Tabs Bar */
+.onz-tabs-bar {
+  background: var(--espresso);
+  border-bottom: 1px solid rgba(255, 246, 233, 0.1);
+  position: sticky;
+  top: var(--header-h);
+  z-index: 800;
+}
+
+.onz-tabs-bar__inner {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  padding-block: 12px;
+}
+
+.onz-tab-item {
+  color: rgba(255, 246, 233, 0.7);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-bold);
+  padding: 6px 18px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: all var(--dur-fast);
+}
+
+.onz-tab-item--active,
+.onz-tab-item:hover {
+  background: var(--orange);
+  color: var(--white);
+}
+
+/* Drinks Section Grid */
+.onz-drinks-section {
+  padding-block: clamp(48px, 8vw, 84px);
+  background-color: var(--cream);
+}
+
+.onz-section-header {
+  margin-block-end: clamp(32px, 6vw, 56px);
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.onz-section-header__title {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: var(--fw-black);
+  color: var(--espresso);
+  margin-block-end: var(--space-xs);
+}
+
+.onz-section-header__desc {
+  font-size: var(--text-md);
+  color: var(--espresso-60);
+  line-height: 1.6;
+}
+
+.onz-drinks-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 4vw, 32px);
+}
+
+@media (min-width: 640px) {
+  .onz-drinks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .onz-drinks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.onz-drink-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(58, 30, 23, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+
+.onz-drink-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 44px rgba(58, 30, 23, 0.12);
+}
+
+.onz-drink-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #F5E8D0;
+}
+
+.onz-drink-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out);
+}
+
+.onz-drink-card:hover .onz-drink-card__media img {
+  transform: scale(1.06);
+}
+
+.onz-drink-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--espresso);
+  color: var(--cream);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+[dir="rtl"] .onz-drink-badge {
+  right: auto;
+  left: 14px;
+}
+
+.onz-drink-card__body {
+  padding: clamp(20px, 4vw, 28px);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: right;
+}
+
+.onz-drink-card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block-end: 8px;
+}
+
+.onz-drink-tag {
+  color: var(--orange);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-bold);
+}
+
+.onz-drink-price {
+  color: rgba(58, 30, 23, 0.5);
+  font-size: var(--text-xs);
+  font-family: Arial, sans-serif;
+}
+
+.onz-drink-card__title {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: var(--fw-bold);
+  color: var(--espresso);
+  margin-block-end: 8px;
+}
+
+.onz-drink-card__desc {
+  font-size: var(--text-sm);
+  color: var(--espresso-60);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Coffee CTA Banner */
+.onz-coffee-cta {
+  margin-block-start: clamp(48px, 8vw, 72px);
+  background: var(--espresso);
+  border-radius: 24px;
+  padding: clamp(32px, 6vw, 56px);
+  text-align: center;
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+.onz-coffee-cta__title {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: var(--fw-black);
+  margin-block-end: var(--space-xs);
+}
+
+.onz-coffee-cta__desc {
+  font-size: var(--text-md);
+  color: rgba(255, 246, 233, 0.85);
+  max-width: 600px;
+  margin-inline: auto;
+  margin-block-end: var(--space-lg);
+}
+
+.onz-coffee-cta__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+/* Story Narrative Blocks */
+.onz-story-section {
+  padding-block: clamp(48px, 8vw, 84px);
+  background: var(--cream);
+}
+
+.onz-narrative-block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+  margin-block-end: clamp(48px, 8vw, 84px);
+}
+
+@media (min-width: 900px) {
+  .onz-narrative-block {
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.onz-tag-accent {
+  color: var(--orange);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-sm);
+  display: inline-block;
+  margin-block-end: var(--space-xs);
+}
+
+.onz-narrative-title {
+  font-size: clamp(28px, 4.5vw, 42px);
+  font-weight: var(--fw-black);
+  color: var(--espresso);
+  line-height: 1.2;
+  margin-block-end: var(--space-md);
+}
+
+.onz-narrative-p {
+  font-size: var(--text-md);
+  color: var(--espresso-60);
+  line-height: 1.8;
+  margin-block-end: var(--space-sm);
+}
+
+.onz-narrative-media {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(58, 30, 23, 0.1);
+}
+
+.onz-narrative-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Philosophy 3 Pillars */
+.onz-philosophy-section {
+  margin-block-end: clamp(48px, 8vw, 84px);
+}
+
+.onz-philosophy-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-block-start: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .onz-philosophy-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.onz-philosophy-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: clamp(28px, 5vw, 36px);
+  text-align: start;
+  box-shadow: 0 8px 28px rgba(58, 30, 23, 0.05);
+  border: 1px solid rgba(58, 30, 23, 0.06);
+  transition: transform var(--dur-fast);
+}
+
+[dir="rtl"] .onz-philosophy-card {
+  text-align: right;
+}
+
+.onz-philosophy-card:hover {
+  transform: translateY(-6px);
+}
+
+.onz-philosophy-icon {
+  font-size: 36px;
+  margin-block-end: var(--space-xs);
+}
+
+.onz-philosophy-title {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-bold);
+  color: var(--espresso);
+  margin-block-end: 8px;
+}
+
+.onz-philosophy-desc {
+  font-size: var(--text-sm);
+  color: var(--espresso-60);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Mission Banner */
+.onz-mission-banner {
+  background: var(--espresso);
+  color: var(--cream);
+  border-radius: 24px;
+  padding: clamp(36px, 6vw, 64px);
+  text-align: center;
+}
+
+.onz-mission-banner__title {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: var(--fw-black);
+  margin-block-end: var(--space-sm);
+  color: var(--cream);
+}
+
+.onz-mission-banner__desc {
+  font-size: var(--text-md);
+  color: rgba(255, 246, 233, 0.85);
+  max-width: 640px;
+  margin-inline: auto;
+  margin-block-end: var(--space-lg);
+  line-height: 1.7;
+}
+
+.onz-mission-banner__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
 }
