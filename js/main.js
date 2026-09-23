@@ -19,24 +19,44 @@
     }
   }
 
-  /* ── 1. Bootstrap Offcanvas ──────────────────────────────────
-     Opens the full-screen nav. Closes when a nav link is clicked
-     (smooth-scroll to the section happens after close).
-  ──────────────────────────────────────────────────────────── */
+  /* ── 1. Offcanvas Drawer (Standalone + Bootstrap compatible) ─ */
   function initOffcanvas() {
     const offcanvasEl = document.getElementById('onz-offcanvas');
-    if (!offcanvasEl || typeof bootstrap === 'undefined') return;
+    if (!offcanvasEl) return;
 
-    const bsOffcanvas = new bootstrap.Offcanvas(offcanvasEl, {
-      scroll: false,
-      backdrop: true,
-    });
+    let bsOffcanvas = null;
+    if (typeof bootstrap !== 'undefined' && bootstrap.Offcanvas) {
+      try {
+        bsOffcanvas = new bootstrap.Offcanvas(offcanvasEl, { scroll: false, backdrop: true });
+      } catch (_) {}
+    }
 
-    /* Open on hamburger click */
+    function showMenu() {
+      if (bsOffcanvas) {
+        bsOffcanvas.show();
+      } else {
+        offcanvasEl.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function hideMenu() {
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
+      } else {
+        offcanvasEl.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    }
+
     const hamburger = document.getElementById('hamburger-btn');
     if (hamburger) {
-      hamburger.addEventListener('click', () => bsOffcanvas.show());
+      hamburger.addEventListener('click', showMenu);
     }
+
+    offcanvasEl.querySelectorAll('[data-bs-dismiss="offcanvas"], .btn-close, .onz-close-btn').forEach(btn => {
+      btn.addEventListener('click', hideMenu);
+    });
 
     /* Close + smooth-scroll on nav link click */
     offcanvasEl.querySelectorAll('[data-offcanvas-close]').forEach(link => {
@@ -44,8 +64,7 @@
         const href = link.getAttribute('href');
         if (href && href.startsWith('#')) {
           e.preventDefault();
-          bsOffcanvas.hide();
-          /* Scroll after offcanvas closes (350ms transition) */
+          hideMenu();
           setTimeout(() => {
             const target = document.querySelector(href);
             if (target) {
@@ -68,7 +87,6 @@
   ──────────────────────────────────────────────────────────── */
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(link => {
-      /* Skip offcanvas links (already handled above) */
       if (link.hasAttribute('data-offcanvas-close')) return;
 
       link.addEventListener('click', (e) => {
@@ -87,11 +105,7 @@
     });
   }
 
-  /* ── 3. Menu PDF button wiring ───────────────────────────────
-     All [data-menu-pdf] links are updated by i18n.js.
-     This ensures they open in a new tab and don't
-     break if the PDF is missing.
-  ──────────────────────────────────────────────────────────── */
+  /* ── 3. Menu PDF button wiring ─────────────────────────────── */
   function initMenuButtons() {
     document.querySelectorAll('[data-menu-pdf]').forEach(el => {
       el.setAttribute('target', '_blank');
@@ -99,8 +113,9 @@
     });
   }
 
-  /* ── 4. Inject SVG sprite into DOM ─────────────────────────── */
+  /* ── 4. Inject SVG sprite into DOM (Skipped on file://) ─────── */
   async function injectSvgSprite() {
+    if (window.location.protocol === 'file:') return;
     try {
       const resp = await fetch('assets/svg/squiggles.svg');
       if (!resp.ok) return;
@@ -111,92 +126,45 @@
       div.innerHTML = text;
       document.body.insertAdjacentElement('afterbegin', div);
     } catch (_) {
-      /* Fetch failed (e.g., file:// protocol) — inline SVGs still render */
+      /* Fallback gracefully */
     }
   }
 
-  /* ── 5. Hero Curtain Reveal, Video Playback & Badge ──────────
-     Sequence:
-      1. Page loads → poster is ready behind the curtain panels
-      2. ~200ms delay → curtain panels slide apart (800ms ease-out)
-      3. Exactly as curtains finish opening (~1000ms) → video.play() & badge drops in
-      4. Video ends (or 4.5s fallback) → headline reveals
-  ──────────────────────────────────────────────────────────── */
+  /* ── 5. Hero Video Playback & Mobile Video Setup ───────────── */
   function initHeroSequence() {
     const video    = document.getElementById('onz-hero-video');
-    const curtain  = document.querySelector('.onz-hero-curtain');
-    const badge    = document.querySelector('.onz-hero__badge');
     const headline = document.querySelector('.onz-hero__headline');
 
-    function revealHeadline() {
-      if (headline) {
-        headline.classList.add('is-revealed');
+    if (headline) {
+      headline.classList.add('is-revealed');
+    }
+
+    if (!video) return;
+
+    video.muted = true;
+    video.playsInline = true;
+
+    /* Select mobile-optimized portrait video on small screens */
+    if (window.innerWidth <= 767 && !video.currentSrc.includes('mobile')) {
+      const mobileSrc = 'assets/video/hero-pour-mobile.mp4';
+      if (video.src !== mobileSrc) {
+        video.src = mobileSrc;
+        video.load();
       }
     }
 
-    function revealBadge() {
-      if (badge) {
-        badge.classList.add('is-visible');
+    const tryPlay = () => {
+      const p = video.play();
+      if (p !== undefined) {
+        p.catch(() => {
+          /* Autoplay blocked by power-saver or user settings — poster remains */
+        });
       }
-    }
+    };
 
-    /* Fallback timer: ensure headline appears after 5.5s regardless */
-    const fallbackTimer = setTimeout(revealHeadline, 5500);
-
-    /* If prefers-reduced-motion is active */
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      clearTimeout(fallbackTimer);
-      if (curtain) curtain.classList.add('is-open');
-      revealBadge();
-      revealHeadline();
-      return;
-    }
-
-    if (video) {
-      video.muted = true;
-
-      /* When video ends naturally, reveal headline */
-      video.addEventListener('ended', function () {
-        clearTimeout(fallbackTimer);
-        revealHeadline();
-      }, { once: true });
-
-      /* Handle video error fallback */
-      video.addEventListener('error', function () {
-        clearTimeout(fallbackTimer);
-        revealHeadline();
-      }, { once: true });
-    } else {
-      revealHeadline();
-    }
-
-    /* Start curtain opening after short delay (200ms) */
-    setTimeout(function () {
-      if (curtain) {
-        curtain.classList.add('is-open');
-      }
-
-      /* Exactly when curtain finishes opening (200ms + 800ms = 1000ms from load) */
-      setTimeout(function () {
-        revealBadge();
-
-        if (video) {
-          try {
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(function () {
-                /* Autoplay blocked by browser policy — reveal headline gracefully */
-                clearTimeout(fallbackTimer);
-                revealHeadline();
-              });
-            }
-          } catch (_) {
-            clearTimeout(fallbackTimer);
-            revealHeadline();
-          }
-        }
-      }, 800);
-    }, 200);
+    tryPlay();
+    document.addEventListener('touchstart', tryPlay, { once: true });
+    document.addEventListener('click', tryPlay, { once: true });
   }
 
   /* ── Init ─────────────────────────────────────────────────── */

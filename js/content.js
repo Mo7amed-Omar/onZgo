@@ -19,13 +19,13 @@ const CONFIG = {
     ar: 'assets/menu/menu-ar.pdf',
     en: 'assets/menu/menu-en.pdf',
   },
-  whatsapp: '[WHATSAPP_NUMBER]',   // e.g. '201012345678' (no + or spaces)
-  mapsUrl:  '[GOOGLE_MAPS_URL]',   // full Google Maps link
-  instagram: '[INSTAGRAM_URL]',    // full URL or '' to hide
-  facebook:  '[FACEBOOK_URL]',     // full URL or '' to hide
-  address:  '[ADDRESS]',
-  hours:    '[OPENING HOURS]',
-  phone:    '[PHONE]',
+  whatsapp: '201000000000',
+  mapsUrl:  'https://maps.google.com',
+  instagram: 'https://instagram.com',
+  facebook:  'https://facebook.com',
+  address:  'القاهرة، مصر',
+  hours:    'يومياً: ٧:٠٠ ص – ١٢:٠٠ م',
+  phone:    '+20 100 000 0000',
 };
 
 /* ── Bilingual Copy ──────────────────────────────────────────── */
@@ -113,9 +113,9 @@ const CONTENT = {
 
     /* Visit */
     visitTitle:       'Visit Us',
-    visitAddress:     CONFIG.address,
-    visitHours:       CONFIG.hours,
-    visitPhone:       CONFIG.phone,
+    visitAddress:     'Cairo, Egypt',
+    visitHours:       'Daily: 7:00 AM – 12:00 AM',
+    visitPhone:       '+20 100 000 0000',
     visitBtn:         'Get directions',
     visitBtnAria:     'Open location on map',
 

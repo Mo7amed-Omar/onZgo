@@ -15,7 +15,8 @@
   z-index: 900;
   display: flex;
   align-items: center;
-  padding-inline: var(--space-md);
+  justify-content: space-between;
+  padding-inline: clamp(16px, 4vw, 24px);
   /* Start transparent, gets .onz-header--solid on scroll */
   background: transparent;
   transition: background var(--dur-med) var(--ease-out),
@@ -28,29 +29,39 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* Three-column flex layout: hamburger | logo | lang */
+/* Three-column layout: hamburger (start) | centered logo | lang toggle (end) */
 .onz-header__hamburger {
-  flex: 0 0 auto;
-  order: 1; /* start side */
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 2;
 }
 
 .onz-header__logo {
-  flex: 1 1 auto;
-  order: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: auto;
+  z-index: 1;
 }
 
 .onz-header__logo img,
 .onz-header__logo svg {
-  height: 36px;
+  height: clamp(28px, 4.5vw, 36px);
   width: auto;
+  max-width: 130px;
 }
 
 .onz-header__lang {
-  flex: 0 0 auto;
-  order: 3; /* end side */
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 2;
 }
 
 /* Hamburger button */
@@ -108,20 +119,40 @@
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    OFFCANVAS MENU OVERLAY
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-/* Override Bootstrap offcanvas to full-screen espresso */
-.onz-offcanvas.offcanvas {
-  background-color: var(--espresso) !important;
+/* Full-screen espresso mobile drawer (works standalone and with Bootstrap) */
+.onz-offcanvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
+  background-color: var(--espresso) !important;
+  z-index: 1050 !important;
   border: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.onz-offcanvas:not(.show) {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.onz-offcanvas.show {
+  display: flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .onz-offcanvas .offcanvas-header {
-  padding: var(--space-md);
+  padding: clamp(16px, 4vw, 24px);
   border-bottom: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .onz-offcanvas .offcanvas-header .onz-offcanvas__logo {
@@ -129,10 +160,43 @@
   width: auto;
 }
 
-/* Bootstrap close button override */
-.onz-offcanvas .btn-close {
-  filter: invert(1) brightness(2);
+/* Close button (standalone styling) */
+.onz-offcanvas .btn-close,
+.onz-close-btn {
+  background: none !important;
+  border: none !important;
+  color: var(--cream) !important;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
   opacity: 0.9;
+  position: relative;
+}
+
+.onz-offcanvas .btn-close::before,
+.onz-offcanvas .btn-close::after,
+.onz-close-btn::before,
+.onz-close-btn::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  background: var(--cream);
+  border-radius: 2px;
+}
+
+.onz-offcanvas .btn-close::before,
+.onz-close-btn::before {
+  transform: rotate(45deg);
+}
+
+.onz-offcanvas .btn-close::after,
+.onz-close-btn::after {
+  transform: rotate(-45deg);
 }
 
 .onz-offcanvas .offcanvas-body {
@@ -403,10 +467,11 @@
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    SCROLL REVEAL
+   Visible by default so content is never missing or blank.
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .onz-reveal {
-  opacity: 0;
-  transform: translateY(28px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity var(--dur-slow) var(--ease-out),
               transform var(--dur-slow) var(--ease-out);
 }
@@ -418,16 +483,16 @@
 
 /* Stagger children of a reveal group */
 .onz-reveal-group > * {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity var(--dur-slow) var(--ease-out),
               transform var(--dur-slow) var(--ease-out);
 }
 
 .onz-reveal-group.is-visible > *:nth-child(1) { transition-delay: 0ms; }
-.onz-reveal-group.is-visible > *:nth-child(2) { transition-delay: 100ms; }
-.onz-reveal-group.is-visible > *:nth-child(3) { transition-delay: 200ms; }
-.onz-reveal-group.is-visible > *:nth-child(4) { transition-delay: 300ms; }
+.onz-reveal-group.is-visible > *:nth-child(2) { transition-delay: 80ms; }
+.onz-reveal-group.is-visible > *:nth-child(3) { transition-delay: 160ms; }
+.onz-reveal-group.is-visible > *:nth-child(4) { transition-delay: 240ms; }
 
 .onz-reveal-group.is-visible > * {
   opacity: 1;

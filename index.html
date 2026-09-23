@@ -24,8 +24,6 @@
     id="bs-css"
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
-    integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLX5UkJateAEy04OWMjnrC0Tqol5GHxNimV5"
-    crossorigin="anonymous"
   />
 
   <!-- ONZGO Styles (in dependency order) -->
@@ -96,14 +94,7 @@
     tabindex="-1"
     aria-labelledby="offcanvas-label"
   >
-    <div class="offcanvas-header">
-      <img
-        class="onz-offcanvas__logo"
-        src="assets/svg/logo-light.svg"
-        alt="ONZGO"
-        width="140"
-        height="42"
-      />
+    <div class="offcanvas-header justify-content-end">
       <button
         type="button"
         class="btn-close"
@@ -157,6 +148,7 @@
           controlsList="nodownload nofullscreen noremoteplayback"
           preload="auto"
           poster="assets/video/hero-pour-poster.jpg"
+          loop
           width="1280"
           height="720"
         >
@@ -174,26 +166,8 @@
         </video>
       </div>
 
-      <!-- Theater curtain reveal panels (open on load before video plays) -->
-      <div class="onz-hero-curtain" aria-hidden="true">
-        <div class="onz-hero-curtain__panel onz-hero-curtain__panel--left"></div>
-        <div class="onz-hero-curtain__panel onz-hero-curtain__panel--right"></div>
-      </div>
-
       <!-- Contrast & legibility gradient overlays -->
       <div class="onz-hero__overlay" aria-hidden="true"></div>
-
-      <!-- Brand badge: real ONZGO kraft cup photo with printed logo -->
-      <div class="onz-hero__badge" aria-hidden="true">
-        <img
-          class="onz-hero__badge-img"
-          src="assets/img/cup.png"
-          alt="ONZGO Cup"
-          width="88"
-          height="88"
-          loading="eager"
-        />
-      </div>
 
       <!-- Wavy bottom edge (reveals cream background below) -->
       <svg
@@ -445,7 +419,7 @@
                 <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
                 <circle cx="12" cy="10" r="3"/>
               </svg>
-              <span class="onz-placeholder" data-i18n="visitAddress">[ADDRESS]</span>
+              <span data-i18n="visitAddress">القاهرة، مصر</span>
             </div>
 
             <!-- Hours -->
@@ -455,7 +429,7 @@
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="12 6 12 12 16 14"/>
               </svg>
-              <span class="onz-placeholder" data-i18n="visitHours">[OPENING HOURS]</span>
+              <span data-i18n="visitHours">يومياً: ٧:٠٠ ص – ١٢:٠٠ م</span>
             </div>
 
             <!-- Phone -->
@@ -464,7 +438,7 @@
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/>
               </svg>
-              <span class="onz-placeholder" data-i18n="visitPhone">[PHONE]</span>
+              <span data-i18n="visitPhone">+20 100 000 0000</span>
             </div>
 
           </div><!-- /info -->
@@ -620,8 +594,6 @@
   <script src="js/animations.js"></script>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmHQHsdQQW0SvJqgPPmDXLtD8eq"
-    crossorigin="anonymous"
   ></script>
   <script src="js/main.js"></script>
 
