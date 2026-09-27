@@ -202,16 +202,27 @@
           <!-- Top Curtain Panel (Slides UP vertically) -->
           <div class="onz-theater__curtain-top" aria-hidden="true"></div>
 
-          <!-- Video inside theater -->
+          <!-- Video inside theater with guaranteed poster backdrop -->
           <div class="onz-theater__video-wrap">
+            <img
+              src="assets/video/hero-pour-poster.jpg"
+              alt="فن سكب القهوة"
+              class="onz-theater__poster"
+              loading="eager"
+              width="1280"
+              height="720"
+            />
             <video
               id="onz-theater-video"
               class="onz-theater__video"
+              autoplay
               muted
               playsinline
               webkit-playsinline="true"
               x5-playsinline="true"
-              preload="metadata"
+              disablePictureInPicture
+              controlsList="nodownload nofullscreen noremoteplayback"
+              preload="auto"
               poster="assets/video/hero-pour-poster.jpg"
               width="1280"
               height="720"
