@@ -8,24 +8,23 @@
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .onz-hero {
   position: relative;
-  /* Mobile: 75svh so user sees hero cup + headline + top of next section */
-  height: 75svh;
-  min-height: 540px;
-  max-height: 720px;
+  height: 88svh;
+  min-height: 580px;
+  max-height: 820px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end; /* headline anchored toward bottom on mobile */
+  justify-content: flex-end; /* text anchored at bottom */
   overflow: hidden;
   background-color: #1A0D09;
 }
 
 @media (min-width: 900px) {
   .onz-hero {
-    height: 90svh;
-    max-height: 840px;
-    min-height: 640px;
-    flex-direction: row;
+    height: 95svh;
+    max-height: 920px;
+    min-height: 680px;
+    flex-direction: column;
     align-items: center;
     padding-inline: 0;
   }
@@ -47,13 +46,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 72% 30%; /* Cup with ONZGO & stream centered on mobile */
+  object-position: center 5%; /* Cup sits at the top, text area clear at the bottom */
 }
 
 @media (min-width: 900px) {
   .onz-hero-img,
   .onz-hero-video {
-    object-position: 84% center; /* Cup positioned at the right on desktop */
+    object-position: center 8%;
   }
 }
 
@@ -114,28 +113,12 @@
   z-index: 2;
   pointer-events: none;
   background:
-    /* Top gradient for logo readability */
-    linear-gradient(to bottom, rgba(26, 13, 9, 0.8) 0%, rgba(26, 13, 9, 0.25) 18%, transparent 35%),
-    /* Bottom gradient for headline readability on mobile */
-    linear-gradient(to top, #1A0D09 0%, rgba(26, 13, 9, 0.88) 28%, transparent 58%);
+    /* Subtle top for header readability */
+    linear-gradient(to bottom, rgba(26, 13, 9, 0.55) 0%, transparent 20%),
+    /* Strong bottom band — where the text lives, like Costa */
+    linear-gradient(to top, #1A0D09 0%, rgba(26, 13, 9, 0.97) 18%, rgba(26, 13, 9, 0.7) 35%, transparent 55%);
 }
 
-@media (min-width: 900px) {
-  /* On desktop: darken the side where the text sits, keep cup crisp */
-  [dir="rtl"] .onz-hero__overlay {
-    background:
-      linear-gradient(to bottom, rgba(26, 13, 9, 0.85) 0%, transparent 22%),
-      linear-gradient(to right, rgba(26, 13, 9, 0.95) 0%, rgba(26, 13, 9, 0.8) 40%, rgba(26, 13, 9, 0.2) 65%, transparent 85%),
-      linear-gradient(to top, #1A0D09 0%, transparent 18%);
-  }
-
-  [dir="ltr"] .onz-hero__overlay {
-    background:
-      linear-gradient(to bottom, rgba(26, 13, 9, 0.85) 0%, transparent 22%),
-      linear-gradient(to left, rgba(26, 13, 9, 0.95) 0%, rgba(26, 13, 9, 0.8) 40%, rgba(26, 13, 9, 0.2) 65%, transparent 85%),
-      linear-gradient(to top, #1A0D09 0%, transparent 18%);
-  }
-}
 
 /* Wavy bottom edge of hero (reveals cream background below) */
 .onz-hero__wave-bottom {
