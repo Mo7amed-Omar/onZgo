@@ -37,13 +37,14 @@
   position: relative;
 }
 
-/* Three-column layout on mobile: hamburger (start) | centered logo | lang toggle (end) */
+/* Three-column layout on mobile: logo (start/right) | spacer | hamburger (end/left) */
 .onz-header__hamburger {
   flex: 0 0 44px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
   z-index: 2;
+  margin-inline-start: auto; /* pushes hamburger to LEFT end in RTL */
 }
 
 .onz-header__logo {
@@ -52,15 +53,12 @@
   align-items: center;
   pointer-events: auto;
   z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-@media (max-width: 991px) {
-  .onz-header__logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
+
 
 .onz-header__logo img,
 .onz-header__logo svg {
