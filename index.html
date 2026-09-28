@@ -180,12 +180,8 @@
       </div>
 
       <div class="container">
-        <!-- The Theater Stage Container -->
+        <!-- Video Container — no curtain, plays directly -->
         <div id="onz-theater" class="onz-theater">
-          <!-- Top Curtain Panel (Slides UP vertically) -->
-          <div class="onz-theater__curtain-top" aria-hidden="true"></div>
-
-          <!-- Video inside theater with guaranteed poster backdrop -->
           <div class="onz-theater__video-wrap">
             <img
               src="assets/video/hero-pour-poster.jpg"
@@ -200,12 +196,13 @@
               class="onz-theater__video"
               autoplay
               muted
+              loop
               playsinline
               webkit-playsinline="true"
               x5-playsinline="true"
               disablePictureInPicture
-              controlsList="nodownload nofullscreen noremoteplayback"
-              preload="auto"
+              disableRemotePlayback
+              preload="metadata"
               poster="assets/video/hero-pour-poster.jpg"
               width="1280"
               height="720"
@@ -214,17 +211,8 @@
               <source src="assets/video/hero-pour.mp4" type="video/mp4" />
             </video>
           </div>
-
-          <!-- Bottom Curtain Panel (Slides DOWN vertically) -->
-          <div class="onz-theater__curtain-bottom" aria-hidden="true"></div>
-
-          <!-- Replay Button Overlay (Shown when video ends and curtains close) -->
-          <div class="onz-theater__replay">
-            <button id="onz-theater-replay" class="onz-theater__replay-btn" type="button">
-              <span>إعادة المشاهدة ↺</span>
-            </button>
-          </div>
         </div>
+
       </div>
     </section>
 

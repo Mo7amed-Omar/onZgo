@@ -176,96 +176,51 @@
     document.addEventListener('click', tryPlay, { once: true });
   }
 
-  /* ── 6. Vertical Theater Curtain Video Stage ──────────────── */
+  /* ── 6. Theater Video — direct play, no curtain ──────────── */
   function initVerticalTheater() {
-    const theater = document.getElementById('onz-theater');
-    const video   = document.getElementById('onz-theater-video');
-    const replay  = document.getElementById('onz-theater-replay');
-    if (!theater || !video) return;
+    const video = document.getElementById('onz-theater-video');
+    if (!video) return;
 
-    let hasOpened = false;
+    // prefers-reduced-motion: poster only, no autoplay
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      return;
+    }
 
-    // Debug event logging as required
-    video.addEventListener('loadeddata', () => {
-      console.log('[Theater Video] loadeddata: readyState =', video.readyState, 'src =', video.currentSrc);
-    });
-    video.addEventListener('play', () => {
-      console.log('[Theater Video] play event fired! Video is now playing:', video.currentSrc);
-    });
-    video.addEventListener('error', () => {
-      console.error('[Theater Video] error event fired! Code =', video.error ? video.error.code : 'unknown', video.error ? video.error.message : '');
-    });
-
-    video.muted = true;
+    video.muted = true;       // DOM property — required for iOS autoplay
     video.playsInline = true;
 
-    function openCurtainsAndPlay() {
-      if (hasOpened && theater.classList.contains('is-open')) return;
-      hasOpened = true;
-      theater.classList.remove('has-ended');
-      theater.classList.add('is-open');
-
-      const p = video.play();
-      if (p !== undefined) {
-        p.catch(err => {
-          console.warn('[Theater Video] play() blocked or deferred:', err);
-        });
-      }
-    }
-
-    function closeCurtains() {
-      theater.classList.remove('is-open');
-      theater.classList.add('has-ended');
-    }
-
-    function checkInView() {
-      const rect = theater.getBoundingClientRect();
-      if (rect.top < window.innerHeight + 80 && rect.bottom > -80) {
-        openCurtainsAndPlay();
-      }
-    }
-
+    // play/pause based on visibility (saves battery when off-screen)
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting && !hasOpened) {
-            openCurtainsAndPlay();
-            observer.unobserve(entry.target);
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
           }
         });
-      }, { threshold: 0.1, rootMargin: '100px 0px' });
-
-      observer.observe(theater);
+      }, { threshold: 0.35 });
+      observer.observe(video);
     } else {
-      openCurtainsAndPlay();
+      video.play().catch(() => {});
     }
 
-    // Scroll listener fallback for reliable opening on mobile
-    window.addEventListener('scroll', () => {
-      if (!hasOpened) checkInView();
-    }, { passive: true });
-
-    // Initial check in case theater is in view on load
-    checkInView();
-
-    video.addEventListener('ended', closeCurtains);
-
-    if (replay) {
-      replay.addEventListener('click', (e) => {
-        e.stopPropagation();
-        video.currentTime = 0;
-        openCurtainsAndPlay();
-      });
-    }
-
-    // User gesture fallback for mobile browsers requiring interaction
-    const triggerPlay = () => {
-      if (hasOpened && video.paused) {
-        video.play().catch(() => {});
+    // Resume after tab switch
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        const r = video.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          video.play().catch(() => {});
+        }
       }
-    };
-    document.addEventListener('touchstart', triggerPlay, { once: true });
-    document.addEventListener('click', triggerPlay, { once: true });
+    });
+
+    // Low Power Mode fallback — first user gesture triggers play
+    const onGesture = () => { if (video.paused) video.play().catch(() => {}); };
+    document.addEventListener('touchstart', onGesture, { once: true });
+    document.addEventListener('click',      onGesture, { once: true });
   }
 
   /* ── Init ─────────────────────────────────────────────────── */
