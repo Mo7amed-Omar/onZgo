@@ -102,7 +102,7 @@
     display: flex;
     align-items: center;
     gap: clamp(16px, 2.2vw, 30px);
-    margin-inline-end: auto;
+    margin-inline-start: auto; /* pushed to the RIGHT end */
   }
 
   .onz-header__nav-link {
@@ -131,11 +131,8 @@
     background: var(--orange);
     color: #FFFFFF;
   }
-
-  .onz-header__lang {
-    margin-inline-start: auto;
-  }
 }
+
 
 /* Hamburger button */
 .onz-hamburger {
